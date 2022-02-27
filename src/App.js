@@ -24,7 +24,6 @@ function App() {
               <p>{task.text}</p>
               <p>{task.description}</p>
               <p>{task.dueDate.toLocaleString()}</p>
-              {console.log(task.dueDate)}
             </>   
           ) : "No tasks to show"}
           </>
