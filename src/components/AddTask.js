@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import DatePicker from '@mui/lab/DatePicker'; 
+import DateTimePicker from '@mui/lab/DateTimePicker'; 
 import TextField from '@mui/material/TextField';
+import styled from 'styled-components';
 
+export const AddTaskContainer = styled.div`
+    margin: 30px auto;
+    padding: 20px;
+    cursor: pointer;
+    width: 50%;
+    border-radius: 10px;
+    background-color: rgba(162, 210, 255, 0.1);
+`
 
 const AddTask = ({onAdd}) => {
     const [text, setText] = useState('')
@@ -15,7 +24,7 @@ const AddTask = ({onAdd}) => {
 
         // Validation for fields entered
         if (!text) {
-            alert('Please add a task')
+            alert('Please add a task title')
             return
         }
 
@@ -29,7 +38,7 @@ const AddTask = ({onAdd}) => {
 
     const customDatePicker = React.forwardRef((props, ref) => {
         return (
-            <DatePicker
+            <DateTimePicker
             label="Task Date"
             value={dueDate}
             onChange={(newDate) => {
@@ -38,6 +47,19 @@ const AddTask = ({onAdd}) => {
             renderInput={(params) => <TextField {...params} />}
             /> 
     )});
+
+    const InputStyle = {
+        width: "75%", 
+        maxWidth: "1000px", 
+        margin: "auto", 
+        borderTopStyle: "hidden", 
+        borderRightStyle: "hidden", 
+        borderLeftStyle: "hidden", 
+        borderBottomStyle: "dashed", 
+        borderColor: "black", 
+        borderRadius: "2px", 
+        background: "#f6faff"
+    }
 
     return (
         // <form classname='add-form' onSubmit={onSubmit}>
@@ -56,41 +78,43 @@ const AddTask = ({onAdd}) => {
 
         //     <input type='submit' value='Save Task' className='btn btn-block'/>
         // </form>
+        <AddTaskContainer>
+            <Form onSubmit={onSubmit}>
+            <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Label><h5>Task Title</h5></Form.Label>
+                <Form.Control placeholder="Enter task" value={text} onChange={(e) => setText(e.target.value)} style={InputStyle}/>
+                {/* <Form.Text className="text-muted">
+                please give me line breaks :(
+                </Form.Text> */}
+            </Form.Group>
 
-        <Form onSubmit={onSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicText">
-            <Form.Label>Task Title</Form.Label>
-            <Form.Control placeholder="Enter task" value={text} onChange={(e) => setText(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
-            {/* <Form.Text className="text-muted">
-            please give me line breaks :(
-            </Form.Text> */}
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Label><h5>Task Description</h5></Form.Label>
+                <Form.Control type="text" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
+            </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicText">
-            <Form.Label>Task Description</Form.Label>
-            <Form.Control type="text" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
-        </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasic">
+                <Form.Label><h5>Due Date</h5></Form.Label>
+                <br />
+                <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
+                {/* <br />
+                <DatePicker
+                    label="Task Date"
+                    value={date}
+                    onChange={(newDate) => {
+                        setDate(newDate);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />  */}
 
-        <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Label>Due Date</Form.Label>
-            <br />
-            <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)}/>
-            {/* <br />
-            <DatePicker
-                label="Task Date"
-                value={date}
-                onChange={(newDate) => {
-                    setDate(newDate);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-            />  */}
-
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="High Priority" />
-        </Form.Group>
-        <Button type = "submit" variant="primary">Add Task</Button>{' '}
-        </Form>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="High Priority" />
+            </Form.Group>
+            <Button type = "submit" variant="primary">Add Task</Button>{' '}
+            </Form>
+        </AddTaskContainer>
+        
 
 //         <form>
 //   <div class="form-group">

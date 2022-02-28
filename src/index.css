@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.task {
+  background: #f4f4f4;
+  margin: 5px auto;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 50%;
+}
+
+h2 {
+  position: relative;
+  right: 500px;
+}
+
+
