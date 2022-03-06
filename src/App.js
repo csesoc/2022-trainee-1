@@ -12,12 +12,24 @@ import frLocale from 'date-fns/locale/fr';
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  //const [currentPage, setPage] = useState("default")
 
+
+  
   const addTask = (task) => {
     // import { nanoid } from 'nanoid'
     // test.id = nanoid()
     const id = Math.floor(Math.random() * 10000) + 1
     const newTask = {id, ...task}
+    
+    for (const tag of task.tags) {
+      //adds tag to list of all tags if doesnt already exist
+      if (!allTags.includes(tag)) {
+        setAllTags( allTags => [...allTags, tag])
+      }
+    }
+
     setTasks([...tasks, newTask])
   }
 

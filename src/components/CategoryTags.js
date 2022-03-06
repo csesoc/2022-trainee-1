@@ -1,4 +1,5 @@
 import {React, useState} from 'react'
+import {FaTimes} from 'react-icons/fa'
 import "./CategoryTags.css"
 
 
@@ -15,8 +16,7 @@ const InputStyle = {
   background: "#f6faff"
 }
 
-const CategoryTags = () => {
-  const [tags, setTags] = useState([])
+const CategoryTags = ({ tags, setTags }) => {
   const [category, setCategory] = useState("")
 
   const handleEnter = (e) => {
@@ -34,6 +34,8 @@ const CategoryTags = () => {
 
   }
 
+  
+
   return ([
     <input type="text" placeholder="Enter Category Tags" className="form-control" value={category} 
     onChange={(e) => setCategory(e.target.value)} 
@@ -43,8 +45,7 @@ const CategoryTags = () => {
       {tags.map((tag, i) =>
         <div className="tag" key={tag}>
           {tag}
-          <button type="button" class="btn-close btn-sm" aria-label="Close"
-          onClick={() => removeTag(i)}></button>
+          <FaTimes className="x" onClick={() => removeTag(i)}/>
         </div>
       )}
     </div>
