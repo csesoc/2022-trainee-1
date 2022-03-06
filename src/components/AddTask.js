@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import DateTimePicker from '@mui/lab/DateTimePicker'; 
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
+import CategoryTags from './CategoryTags';
 
 export const AddTaskContainer = styled.div`
     margin: 30px auto;
@@ -82,7 +83,8 @@ const AddTask = ({onAdd}) => {
             <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Task Title</h5></Form.Label>
-                <Form.Control placeholder="Enter task" value={text} onChange={(e) => setText(e.target.value)} style={InputStyle}/>
+                <Form.Control placeholder="Enter task" value={text} 
+                onChange={(e) => setText(e.target.value)} style={InputStyle}/>
                 {/* <Form.Text className="text-muted">
                 please give me line breaks :(
                 </Form.Text> */}
@@ -90,12 +92,20 @@ const AddTask = ({onAdd}) => {
 
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Task Description</h5></Form.Label>
-                <Form.Control type="text" placeholder="Enter description" value={description} onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
+                <Form.Control type="text" placeholder="Enter description" value={description} 
+                onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicText">
+                <Form.Label><h5>Categories</h5></Form.Label>
+                <CategoryTags />
+
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasic">
                 <Form.Label><h5>Due Date</h5></Form.Label>
                 <br />
+
                 <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
                 {/* <br />
                 <DatePicker
