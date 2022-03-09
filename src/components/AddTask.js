@@ -19,6 +19,7 @@ const AddTask = ({onAdd}) => {
     const [text, setText] = useState('')
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
+    const [priority, setPriority] = useState(0)
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -29,12 +30,13 @@ const AddTask = ({onAdd}) => {
             return
         }
 
-        onAdd({text, description, dueDate})
+        onAdd({text, description, dueDate, priority})
 
         // Clear form
         setText('')
         setDescription('')
         setDueDate('')
+        setPriority(0)
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
@@ -119,7 +121,7 @@ const AddTask = ({onAdd}) => {
 
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="High Priority" />
+                <Form.Check type="checkbox" label="High Priority" onChange={(e) => setPriority(e.target.value ? 1 : 0)}/>
             </Form.Group>
             <Button type = "submit" variant="primary">Add Task</Button>{' '}
             </Form>
