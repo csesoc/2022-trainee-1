@@ -4,7 +4,7 @@ const TodaysTasks = ({tasks, onDelete}) => {
     // function to find today's tasks
     const today = new Date();
     const todaysDate = `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`
-    const todaysTasks = tasks.filter((task) => `${task.dueDate.getFullYear()} ${task.dueDate.getMonth() + 1} ${task.dueDate.getDate()}` === todaysDate)
+    const todaysTasks = tasks.filter((task) => task.dueDate && `${task.dueDate.getFullYear()} ${task.dueDate.getMonth() + 1} ${task.dueDate.getDate()}` === todaysDate)
 
     return (
         <>
