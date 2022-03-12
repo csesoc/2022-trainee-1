@@ -30,38 +30,38 @@ export const TaskContainer = styled.div`
 // `
 
 const Task = ({task, onDelete}) => {
-    const [textValue, setTextValue] = useState(task.text);
+    // const [textValue, setTextValue] = useState(task.text);
 
-    const [editingTextValue, setEditingTextValue] = useState(textValue);
+    // const [editingTextValue, setEditingTextValue] = useState(textValue);
   
-    const [descValue, setDescValue] = useState(task.description);
-    const [editingDescValue, setEditingDescValue] = useState(descValue);
+    // const [descValue, setDescValue] = useState(task.description);
+    // const [editingDescValue, setEditingDescValue] = useState(descValue);
     
-    const onTextChange = (event) => setEditingTextValue(event.target.textValue);
-    const onDescChange = (event) => setEditingDescValue(event.target.descValue);
+    // const onTextChange = (event) => setEditingTextValue(event.target.textValue);
+    // const onDescChange = (event) => setEditingDescValue(event.target.descValue);
     
-    const onKeyDown = (event) => {
-      if (event.key === "Enter" || event.key === "Escape") {
-        event.target.blur();
-      }
-    }
+    // const onKeyDown = (event) => {
+    //   if (event.key === "Enter" || event.key === "Escape") {
+    //     event.target.blur();
+    //   }
+    // }
   
-    const onTextBlur = (event) => {
-        setTextValue(event.target.textValue)
-    }
+    // const onTextBlur = (event) => {
+    //     setTextValue(event.target.textValue)
+    // }
 
-    const onDescBlur = (event) => {
-        setDescValue(event.target.descValue)
-    }
+    // const onDescBlur = (event) => {
+    //     setDescValue(event.target.descValue)
+    // }
 
 
 
-    const changeBackground = (e) => {
-        e.target.style.background = 'red'
-    }
-    const defaultBackground = (e) => {
-        e.target.style.background = "white"
-    }
+    // const changeBackground = (e) => {
+    //     e.target.style.background = 'red'
+    // }
+    // const defaultBackground = (e) => {
+    //     e.target.style.background = "white"
+    // }
 
     return (
         <TaskContainer className='container'>
@@ -70,13 +70,15 @@ const Task = ({task, onDelete}) => {
             
             <div class='break'></div>
 
-            <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/>
+            <p className='Item'>{task.text}</p>
+            {/* <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/> */}
 
             <div class='break'></div>
 
-            <input className='Item' value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/>
+            {/* <input className='Item' value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/> */}
             
-
+            <p className='Item'>{task.description}</p>
+            
             <div class='break'></div>
             
             {/* <h3 onMouseEnter={changeBackground} onMouseLeave={defaultBackground}>{task.text} </h3> */}
