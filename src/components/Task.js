@@ -3,7 +3,10 @@ import { FaCalendarAlt } from 'react-icons/fa'
 import {FaTimes} from 'react-icons/fa'
 import styled from 'styled-components';
 
-export const TaskContainer = styled.div`     
+export const TaskContainer = styled.div`  
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 5px;
     background: white;
     margin: 30px auto;
     padding: 20px;
@@ -12,7 +15,6 @@ export const TaskContainer = styled.div`
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(162, 210, 255, 0.5);
 `
-
 
 // display: flex;
 // padding: 0px 20px;
@@ -62,14 +64,24 @@ const Task = ({task, onDelete}) => {
     }
 
     return (
-        <TaskContainer>
-            <FaTimes style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
-            <input value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/>
+        <TaskContainer className='container'>
+            <h2> Title </h2>
+            <FaTimes className='Cross' style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
             
-            <input value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/>
+            <div class='break'></div>
+
+            <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/>
+
+            <div class='break'></div>
+
+            <input className='Item' value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/>
+            
+
+            <div class='break'></div>
+            
             {/* <h3 onMouseEnter={changeBackground} onMouseLeave={defaultBackground}>{task.text} </h3> */}
             {/* <p>{task.description}</p> */}
-            <p> <FaCalendarAlt style={{marginBottom: "5px", marginRight: "5px"}}/>
+            <p className='Item'> <FaCalendarAlt style={{marginBottom: "5px", marginRight: "5px"}}/>
                 {task.dueDate.toLocaleString('en-us', {weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "numeric", minute: "numeric"})}
             </p>
         </TaskContainer>

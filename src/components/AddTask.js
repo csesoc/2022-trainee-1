@@ -9,7 +9,7 @@ export const AddTaskContainer = styled.div`
     margin: 30px auto;
     padding: 20px;
     cursor: pointer;
-    width: 50%;
+    width: 40%;
     border-radius: 10px;
     background-color: rgba(162, 210, 255, 0.1);
 `
@@ -40,11 +40,13 @@ const AddTask = ({onAdd}) => {
         return (
             <DateTimePicker
             label="Task Date"
+            // inputFormat="DD-MM-YYYY"
             value={dueDate}
             onChange={(newDate) => {
                 setDueDate(newDate);
             }}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => <TextField {...params} 
+            />}
             /> 
     )});
 
@@ -78,7 +80,7 @@ const AddTask = ({onAdd}) => {
 
         //     <input type='submit' value='Save Task' className='btn btn-block'/>
         // </form>
-        <AddTaskContainer>
+        <AddTaskContainer className='AddTaskContainer'>
             <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Task Title</h5></Form.Label>
