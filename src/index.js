@@ -17,7 +17,7 @@ const ParticlesParams = {
         }
       },
       "color": {
-        "value": "#ffbf69"
+        "value": "#ade8f4"
       },
       "move": {
         "enable": true,
@@ -61,9 +61,8 @@ const ParticlesParams = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Particles
-          params={ParticlesParams} />
     <App />
+    <Particles params={ParticlesParams} />
   </React.StrictMode>,
   document.getElementById('root')
 );

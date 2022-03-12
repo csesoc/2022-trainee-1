@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Header from './components/Header';
 import AddTask from './components/AddTask';
 import Task from './components/Task';
 import Tasks from './components/Tasks';
@@ -11,6 +12,7 @@ import frLocale from 'date-fns/locale/fr';
 
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([]);
 
   const addTask = (task) => {
@@ -26,9 +28,11 @@ function App() {
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div className="App">
-        <AddTask onAdd={addTask} />
+        <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
+        {showAddTask && <AddTask onAdd={addTask}/>}
+        
         <h1>Today's Tasks</h1>
         <div>
           <>
