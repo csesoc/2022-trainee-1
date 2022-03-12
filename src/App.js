@@ -10,6 +10,10 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import frLocale from 'date-fns/locale/fr';
 
 
+const default_color = "#D3D3D3"
+const highlight_color = "#A9A9A9"
+
+
 function App() {
   const [tasks, setTasks] = useState([]);
   const [allTags, setAllTags] = useState([]);
@@ -75,14 +79,19 @@ function App() {
       <div className="App">
         <div id={toggle} className="sidenav">
           <a href="/#" className="closebtn" 
-          onClick={ (e) => {e.preventDefault(); handleNavClick()}}>
+          onClick={(e) => {e.preventDefault(); handleNavClick()}}>
             &times;</a>
-          <a href="/#" onClick={(e) => 
+          <a href="/#" style={{
+            "background-color": currentPage === "Home" ? highlight_color : default_color
+            }}
+          
+            onClick={(e) => 
             {e.preventDefault(); handlePageClick("Home")}}>Home</a>
           { //this renders every category inside the sidebar
             allTags.map((tag) => 
-              <a key={tag.concat("Page")}href="/#" onClick={(e) => 
-                {e.preventDefault(); handlePageClick(tag)}}>{tag}</a>
+              <a key={tag.concat("Page")}href="/#" style={{
+                "background-color": currentPage === tag ? highlight_color : default_color}}
+                onClick={(e) => {e.preventDefault(); handlePageClick(tag)}}>{tag}</a>
             )
           }
         </div>
