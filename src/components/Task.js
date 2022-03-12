@@ -80,12 +80,17 @@ const Task = ({task, onDelete}) => {
             <p className='Item'>{task.description}</p>
             
             <div class='break'></div>
-            
+
             {/* <h3 onMouseEnter={changeBackground} onMouseLeave={defaultBackground}>{task.text} </h3> */}
             {/* <p>{task.description}</p> */}
             <p className='Item'> <FaCalendarAlt style={{marginBottom: "5px", marginRight: "5px"}}/>
                 {task.dueDate.toLocaleString('en-us', {weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "numeric", minute: "numeric"})}
             </p>
+            {task.priority ? (
+                <p>
+                    ❗High Priority
+                </p>
+            ) : <></>}
         </TaskContainer>
     )
 }
