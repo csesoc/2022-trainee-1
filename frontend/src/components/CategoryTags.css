@@ -1,0 +1,37 @@
+/*this css is for the buttons and stuff*/
+
+.flex-container {
+  margin: 10px; /* set this to equal other form stuff*/
+  padding: 5px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  background-color: #f4f4f4;
+  gap: 5px 10px;
+}
+
+
+.tag {
+  display: flex;
+  justify-content: space-between;
+  border-style: solid;
+  border-radius: 5px;
+  border-color: black solid;
+  background-color: lightblue;
+  border-width: 1px;
+
+  min-width: 50px;
+
+  padding: 0px 3px;
+
+}
+
+.x {
+  margin-left: 5px;
+  color: grey;
+  cursor: pointer;
+}
+
+.x:hover {
+  color: red;
+}

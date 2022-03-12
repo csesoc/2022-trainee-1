@@ -1,0 +1,74 @@
+.App {
+  text-align: center;
+}
+
+
+.navbar{
+  overflow: hidden;
+  background-color: #0d6ffc;
+  height: 70px;
+  font-size: 30px;
+  padding: 10px;
+  width: 100%;
+  position: -webkit-sticky; /* Safari */
+  top: 0;
+  display: block;
+  text-align: center;
+}
+
+.openbtn{
+  position: fixed;
+  left: 20px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: 	#D3D3D3;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+}
+
+
+
+#hidden {
+  width: 0px;
+}
+
+#open {
+  width: 200px;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+
+
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
