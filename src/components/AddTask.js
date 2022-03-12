@@ -121,7 +121,9 @@ const AddTask = ({onAdd}) => {
 
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="High Priority" onChange={(e) => setPriority(e.target.value ? 1 : 0)}/>
+                <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
+                    setPriority(e.target.checked ? 1 : 0)
+                    }}/>
             </Form.Group>
             <Button type = "submit" variant="primary">Add Task</Button>{' '}
             </Form>

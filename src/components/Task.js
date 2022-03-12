@@ -64,14 +64,22 @@ const Task = ({task, onDelete}) => {
     return (
         <TaskContainer>
             <FaTimes style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
-            <input value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/>
+            {/* <p>{editingTextValue}</p>
+            <p>{textValue}</p>
+            <p>{task.text}</p> */}
+            <input value={task.text} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/>
             
-            <input value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/>
+            <input value={task.description} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/>
             {/* <h3 onMouseEnter={changeBackground} onMouseLeave={defaultBackground}>{task.text} </h3> */}
             {/* <p>{task.description}</p> */}
             <p> <FaCalendarAlt style={{marginBottom: "5px", marginRight: "5px"}}/>
                 {task.dueDate.toLocaleString('en-us', {weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "numeric", minute: "numeric"})}
             </p>
+            {task.priority ? (
+                <p>
+                    ❗High Priority
+                </p>
+            ) : <></>}
         </TaskContainer>
     )
 }
