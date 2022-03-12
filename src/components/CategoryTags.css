@@ -25,3 +25,13 @@
   padding: 0px 3px;
 
 }
+
+.x {
+  margin-left: 5px;
+  color: grey;
+  cursor: pointer;
+}
+
+.x:hover {
+  color: red;
+}

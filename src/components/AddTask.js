@@ -19,7 +19,9 @@ const AddTask = ({onAdd}) => {
     const [text, setText] = useState('')
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
+    const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(0)
+
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -30,12 +32,13 @@ const AddTask = ({onAdd}) => {
             return
         }
 
-        onAdd({text, description, dueDate, priority})
+        onAdd({text, description, dueDate, tags, priority})
 
         // Clear form
         setText('')
         setDescription('')
         setDueDate('')
+        setTags([])
         setPriority(0)
     }
 
@@ -102,7 +105,7 @@ const AddTask = ({onAdd}) => {
 
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Categories</h5></Form.Label>
-                <CategoryTags />
+                <CategoryTags tags={tags} setTags={setTags}/>
 
             </Form.Group>
 
