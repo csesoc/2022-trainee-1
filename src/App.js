@@ -76,7 +76,7 @@ function App() {
         {
           toggle === "hidden" ?
           <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
-          onClick={handleNavClick}>&#9776; Thingo</span> : ""
+          onClick={handleNavClick}>&#9776;</span> : ""
         }
       </div>
       <div className="App">
@@ -100,8 +100,6 @@ function App() {
             )
           }
         </div>
-
-        <AddTask onAdd={addTask} />
         { // we only show Today's Tasks on the Home Page
           currentPage === "Home" ?
           <>
