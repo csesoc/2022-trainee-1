@@ -10,7 +10,7 @@ export const AddTaskContainer = styled.div`
     margin: 30px auto;
     padding: 20px;
     cursor: pointer;
-    width: 50%;
+    width: 40%;
     border-radius: 10px;
     background-color: rgba(162, 210, 255, 0.1);
 `
@@ -20,6 +20,8 @@ const AddTask = ({onAdd}) => {
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState([])
+    const [priority, setPriority] = useState(0)
+
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -30,24 +32,27 @@ const AddTask = ({onAdd}) => {
             return
         }
 
-        onAdd({text, description, dueDate, tags})
+        onAdd({text, description, dueDate, tags, priority})
 
         // Clear form
         setText('')
         setDescription('')
         setDueDate('')
         setTags([])
+        setPriority(0)
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
         return (
             <DateTimePicker
             label="Task Date"
+            // inputFormat="DD-MM-YYYY"
             value={dueDate}
             onChange={(newDate) => {
                 setDueDate(newDate);
             }}
-            renderInput={(params) => <TextField {...params} />}
+            renderInput={(params) => <TextField {...params} 
+            />}
             /> 
     )});
 
@@ -81,7 +86,7 @@ const AddTask = ({onAdd}) => {
 
         //     <input type='submit' value='Save Task' className='btn btn-block'/>
         // </form>
-        <AddTaskContainer>
+        <AddTaskContainer className='AddTaskContainer'>
             <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Task Title</h5></Form.Label>
@@ -121,7 +126,9 @@ const AddTask = ({onAdd}) => {
 
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="High Priority" />
+                <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
+                    setPriority(e.target.checked ? 1 : 0)
+                    }}/>
             </Form.Group>
             <Button type = "submit" variant="primary">Add Task</Button>{' '}
             </Form>

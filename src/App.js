@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Header from './components/Header';
 import AddTask from './components/AddTask';
 //import Task from './components/Task';
 import Tasks from './components/Tasks';
@@ -15,6 +16,7 @@ const highlight_color = "#A9A9A9"
 
 
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const [currentPage, setPage] = useState("Home")
@@ -68,6 +70,7 @@ function App() {
   }
 
   return (
+
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
         {
@@ -77,6 +80,8 @@ function App() {
         }
       </div>
       <div className="App">
+        <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
+        {showAddTask && <AddTask onAdd={addTask}/>}
         <div id={toggle} className="sidenav">
           <a href="/#" className="closebtn" 
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
