@@ -12,15 +12,24 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/tasks', (req, res) => {
-    res.json(JSON.parse(fs.readFileSync(saveFile)));
+    res.json(JSON.parse(fs.readFileSync(saveFile))['taskList']);
 })
 
 app.post('/tasks', (req, res) => {
-    const tasks = JSON.parse(fs.readFileSync(saveFile));
-    console.log(tasks);
-    tasks.push(req.body);
-    console.log(tasks);
-    fs.writeFileSync(saveFile, JSON.stringify(tasks, null, 4));
+    const data = JSON.parse(fs.readFileSync(saveFile));
+    const newTask = req.body;
+    newTask['id'] = data['autoIncrement'];
+    data['autoIncrement']++;
+    data['taskList'].push(req.body);
+    fs.writeFileSync(saveFile, JSON.stringify(data, null, 4));
+    res.sendStatus(200);
+})
+
+app.delete('/tasks', (req, res) => {
+    const idToDelete = req.body.idToDelete;
+    const data = JSON.parse(fs.readFileSync(saveFile));
+    data['taskList'] = data['taskList'].filter(task => task['id'] != idToDelete);
+    fs.writeFileSync(saveFile, JSON.stringify(data, null, 4));
     res.sendStatus(200);
 })
 
