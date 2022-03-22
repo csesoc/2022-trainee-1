@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { FaCalendarAlt } from 'react-icons/fa'
-import {FaTimes} from 'react-icons/fa'
 import styled from 'styled-components';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 
 export const TaskContainer = styled.div`  
     display: flex;
@@ -30,6 +31,10 @@ export const TaskContainer = styled.div`
 // `
 
 const Task = ({task, onDelete}) => {
+    const [showSubTasks, setShowSubTasks] = useState(false)
+    
+    // TODO: ATTEMPT AT EDITING TASKS:
+
     // const [textValue, setTextValue] = useState(task.text);
 
     // const [editingTextValue, setEditingTextValue] = useState(textValue);
@@ -55,7 +60,6 @@ const Task = ({task, onDelete}) => {
     // }
 
 
-
     // const changeBackground = (e) => {
     //     e.target.style.background = 'red'
     // }
@@ -63,10 +67,19 @@ const Task = ({task, onDelete}) => {
     //     e.target.style.background = "white"
     // }
 
+    // const addSubTask = (task) => {
+    //     const id = Math.floor(Math.random() * 10000) + 1
+    //     const newSubTask = {id, ...task}
+    
+    
+    //     setSubTasks([...subtasks, newSubTask])
+    // }
+
+
     return (
         <TaskContainer className='container'>
             <h2> Title </h2>
-            <FaTimes className='Cross' style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
+            <FlutterDashIcon className='Complete' style={{cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
             
             <div class='break'></div>
 
@@ -86,11 +99,21 @@ const Task = ({task, onDelete}) => {
             <p className='Item'> <FaCalendarAlt style={{marginBottom: "5px", marginRight: "5px"}}/>
                 {task.dueDate.toLocaleString('en-us', {weekday:"long", year:"numeric", month:"short", day:"numeric", hour: "numeric", minute: "numeric"})}
             </p>
-            {task.priority ? (
+
+            {/* {task.priority ? (
                 <p>
                     ❗High Priority
                 </p>
-            ) : <></>}
+            ) : <></>} */}
+
+            <div class='break'></div>
+
+            <DirectionsRunIcon className='Complete' style={{cursor: 'pointer'}} onClick={() => setShowSubTasks(!showSubTasks)} />
+
+            <div class='break'></div>
+
+            {showSubTasks ? <p className='Item'>{task.subtasks.length > 0 ? task.subtasks : <></>}</p> : <></>}
+
         </TaskContainer>
     )
 }

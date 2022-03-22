@@ -21,20 +21,18 @@ const AddTask = ({onAdd}) => {
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(0)
-    
-    // TODO: currently can only have one subtask as it is stored as a string
-    const [subtasks, setSubTasks] = useState('')
+
     
     const onSubmit = (e) => {
         e.preventDefault()
 
-        // TODO: maybe instead of alerting you just can't submit the form without the title? (like in Google Forms)
+        // Validation for fields entered
         if (!text) {
             alert('Please add a task title')
             return
         }
 
-        onAdd({text, description, dueDate, tags, priority, subtasks})
+        onAdd({text, description, dueDate, tags, priority})
 
         // Clear form
         setText('')
@@ -42,7 +40,6 @@ const AddTask = ({onAdd}) => {
         setDueDate('')
         setTags([])
         setPriority(0)
-        setSubTasks([])
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
@@ -73,12 +70,31 @@ const AddTask = ({onAdd}) => {
     }
 
     return (
+        // <form classname='add-form' onSubmit={onSubmit}>
+        //     <div className='form-control'>
+        //         <label>Task</label>
+        //         <input type='text' placeholder='Add Task' value={text} onChange={(e) => setText(e.target.value)} />
+        //     </div>
+        //     <div className='form-control'>
+        //         <label>Day & Time</label>
+        //         <input type='text' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
+        //     </div>
+        //     <div className='form-control form-control-check'>
+        //         <label>Set Reminder</label>
+        //         <input type='checkbox'checked={reminder} value={reminder} onChange={(e) => setReminder(e.currentTarget.checked)} />
+        //     </div>
+
+        //     <input type='submit' value='Save Task' className='btn btn-block'/>
+        // </form>
         <AddTaskContainer className='AddTaskContainer'>
             <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Task Title</h5></Form.Label>
                 <Form.Control placeholder="Enter task" value={text} 
                 onChange={(e) => setText(e.target.value)} style={InputStyle}/>
+                {/* <Form.Text className="text-muted">
+                please give me line breaks :(
+                </Form.Text> */}
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicText">
@@ -88,14 +104,9 @@ const AddTask = ({onAdd}) => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label><h5>Subtasks</h5></Form.Label>
-                <Form.Control type="text" placeholder="Enter subtask" value={subtasks} 
-                onChange={(e) => setSubTasks(e.target.value)} style={InputStyle}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Categories</h5></Form.Label>
                 <CategoryTags tags={tags} setTags={setTags}/>
+
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasic">
@@ -103,17 +114,43 @@ const AddTask = ({onAdd}) => {
                 <br />
 
                 <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
-            </Form.Group>
+                {/* <br />
+                <DatePicker
+                    label="Task Date"
+                    value={date}
+                    onChange={(newDate) => {
+                        setDate(newDate);
+                    }}
+                    renderInput={(params) => <TextField {...params} />}
+                />  */}
 
+            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
                     setPriority(e.target.checked ? 1 : 0)
                     }}/>
             </Form.Group>
-
             <Button type = "submit" variant="primary">Add Task</Button>{' '}
             </Form>
         </AddTaskContainer>
+        
+
+//         <form>
+//   <div class="form-group">
+//     <label for="exampleInputEmail1">Email address</label>
+//     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
+//     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+//   </div>
+//   <div class="form-group">
+//     <label for="exampleInputPassword1">Password</label>
+//     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"></input>
+//   </div>
+//   <div class="form-check">
+//     <input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
+//     <label class="form-check-label" for="exampleCheck1">Check me out</label>
+//   </div>
+//   <button type="submit" class="btn btn-primary">Submit</button>
+// </form>
     )
 }
 

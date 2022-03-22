@@ -20,8 +20,6 @@ code {
   width: 50%;
 }
 
-
-
 .right {
   margin-left: 90%;
   margin-bottom: 8%;
@@ -32,7 +30,7 @@ code {
   flex-basis: 5;
 }
 
-.Cross {
+.icon {
   margin-left: auto;
   margin-bottom: 8%;
 }
