@@ -38,9 +38,6 @@ async function run() {
 
     app.delete('/tasks', async (req, res) => {
         const idToDelete = req.body.idToDelete;
-        // const data = JSON.parse(fs.readFileSync(saveFile));
-        // data['taskList'] = data['taskList'].filter(task => task['id'] != idToDelete);
-        // fs.writeFileSync(saveFile, JSON.stringify(data, null, 4));
         await tasksCollection.deleteOne({"_id" : ObjectId(idToDelete)});
         res.sendStatus(200);
     })
