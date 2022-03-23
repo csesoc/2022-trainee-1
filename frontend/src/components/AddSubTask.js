@@ -26,7 +26,6 @@ const AddTask = ({onAdd}) => {
     const onSubmit = (e) => {
         e.preventDefault()
 
-        // Validation for fields entered
         if (!text) {
             alert('Please add a task title')
             return

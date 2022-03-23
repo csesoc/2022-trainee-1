@@ -69,6 +69,19 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  const editTask = (id, newTitle, newDesc, newDueDate) => {
+    const editedTaskList = tasks.map(task => {
+      // if this task has the same ID as the edited task
+        if (id === task.id) {
+          return {...task, text: newTitle, description: newDesc, dueDate: newDueDate}
+        }
+        return task;
+    });
+
+    setTasks(editedTaskList);
+  }
+
+
   return (
 
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
@@ -116,7 +129,7 @@ function App() {
         <h1>Tasks</h1>
         <div>
           <>
-            {tasks.length > 0 ? <Tasks tasks={getTasks()} onDelete={deleteTask}/> : "No tasks to show"}
+            {tasks.length > 0 ? <Tasks tasks={getTasks()} onDelete={deleteTask} onEdit={editTask}/> : "No tasks to show"}
           </>
         </div>
       </div>
