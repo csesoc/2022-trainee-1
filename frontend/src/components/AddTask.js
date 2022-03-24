@@ -23,7 +23,7 @@ const AddTask = ({onAdd}) => {
     const [priority, setPriority] = useState(0)
     
     // TODO: currently can only have one subtask as it is stored as a string
-    const [subtasks, setSubTasks] = useState('')
+    const [subtasks, setSubtasks] = useState([])
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -42,7 +42,7 @@ const AddTask = ({onAdd}) => {
         setDueDate('')
         setTags([])
         setPriority(0)
-        setSubTasks([])
+        setSubtasks([])
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
@@ -87,11 +87,11 @@ const AddTask = ({onAdd}) => {
                 onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicText">
+            {/* <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Subtasks</h5></Form.Label>
                 <Form.Control type="text" placeholder="Enter subtask" value={subtasks} 
                 onChange={(e) => setSubTasks(e.target.value)} style={InputStyle}/>
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Categories</h5></Form.Label>

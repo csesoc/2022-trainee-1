@@ -37,16 +37,15 @@ function App() {
   }
 
   // this returns all tasks which are in current page category
-  const getTasks = () => {
-    if (currentPage === "Home") {
-      return tasks
-    } else {
-      return tasks.filter((t) => {
-        return t.tags.includes(currentPage)
-      })
-    }
-  }
-
+  // const getTasks = () => {
+  //   if (currentPage === "Home") {
+  //     return tasks
+  //   } else {
+  //     return tasks.filter((t) => {
+  //       return t.tags.includes(currentPage)
+  //     })
+  //   }
+  // }
   
   const addTask = (task) => {
     // import { nanoid } from 'nanoid'
@@ -80,6 +79,20 @@ function App() {
 
     setTasks(editedTaskList);
   }
+
+  const addSubtask = (id, newSubtaskArray) => {
+    const editedTaskList = tasks.map(task => {
+      // if this task has the same ID as the edited task
+        if (id === task.id) {
+          return {...task, subtasks: newSubtaskArray}
+        }
+        return task;
+    });
+
+    setTasks(editedTaskList)
+  }
+
+
 
 
   return (
@@ -129,7 +142,7 @@ function App() {
         <h1>Tasks</h1>
         <div>
           <>
-            {tasks.length > 0 ? <Tasks tasks={getTasks()} onDelete={deleteTask} onEdit={editTask}/> : "No tasks to show"}
+            {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}
           </>
         </div>
       </div>

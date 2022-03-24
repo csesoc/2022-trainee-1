@@ -15,142 +15,42 @@ export const AddTaskContainer = styled.div`
     background-color: rgba(162, 210, 255, 0.1);
 `
 
-const AddTask = ({onAdd}) => {
-    const [text, setText] = useState('')
-    const [description, setDescription] = useState('')
-    const [dueDate, setDueDate] = useState('')
-    const [tags, setTags] = useState([])
-    const [priority, setPriority] = useState(0)
 
+
+const AddSubtask = ({task, onAddSubtask}) => {
+    const [subtaskText, setSubtaskText] = useState('')
+
+    const [subtasks, setSubtasks] = useState(task.subtasks);
+    //const [editSubtask, setEditSubtask] = useState(task.subtasks);
     
     const onSubmit = (e) => {
         e.preventDefault()
+        
+        const subtaskMap = new Map();
+        subtaskMap.set("task", subtaskText)
+        subtaskMap.set("complete", false)
+        setSubtasks([...subtasks, subtaskMap])
 
-        if (!text) {
-            alert('Please add a task title')
-            return
-        }
-
-        onAdd({text, description, dueDate, tags, priority})
-
+        // subtasks now includes the subtask we just added
+        onAddSubtask(task.id, [...subtasks, subtaskMap])
+    
+        console.log([...subtasks, subtaskMap])
         // Clear form
-        setText('')
-        setDescription('')
-        setDueDate('')
-        setTags([])
-        setPriority(0)
-    }
-
-    const customDatePicker = React.forwardRef((props, ref) => {
-        return (
-            <DateTimePicker
-            label="Task Date"
-            // inputFormat="DD-MM-YYYY"
-            value={dueDate}
-            onChange={(newDate) => {
-                setDueDate(newDate);
-            }}
-            renderInput={(params) => <TextField {...params} 
-            />}
-            /> 
-    )});
-
-    const InputStyle = {
-        width: "75%", 
-        maxWidth: "1000px", 
-        margin: "auto", 
-        borderTopStyle: "hidden", 
-        borderRightStyle: "hidden", 
-        borderLeftStyle: "hidden", 
-        borderBottomStyle: "dashed", 
-        borderColor: "black", 
-        borderRadius: "2px", 
-        background: "#f6faff"
+        setSubtaskText('')
     }
 
     return (
-        // <form classname='add-form' onSubmit={onSubmit}>
-        //     <div className='form-control'>
-        //         <label>Task</label>
-        //         <input type='text' placeholder='Add Task' value={text} onChange={(e) => setText(e.target.value)} />
-        //     </div>
-        //     <div className='form-control'>
-        //         <label>Day & Time</label>
-        //         <input type='text' placeholder='Add Day & Time' value={day} onChange={(e) => setDay(e.target.value)} />
-        //     </div>
-        //     <div className='form-control form-control-check'>
-        //         <label>Set Reminder</label>
-        //         <input type='checkbox'checked={reminder} value={reminder} onChange={(e) => setReminder(e.currentTarget.checked)} />
-        //     </div>
-
-        //     <input type='submit' value='Save Task' className='btn btn-block'/>
-        // </form>
         <AddTaskContainer className='AddTaskContainer'>
-            <Form onSubmit={onSubmit}>
-            <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label><h5>Task Title</h5></Form.Label>
-                <Form.Control placeholder="Enter task" value={text} 
-                onChange={(e) => setText(e.target.value)} style={InputStyle}/>
-                {/* <Form.Text className="text-muted">
-                please give me line breaks :(
-                </Form.Text> */}
-            </Form.Group>
+            <form onSubmit={onSubmit}>
+                <div className="form-group">
+                    <input className="task-text" placeholder="add subtask" type="text" value={subtaskText} onChange={(e) => setSubtaskText(e.target.value)}/>
+                </div>
 
-            <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label><h5>Task Description</h5></Form.Label>
-                <Form.Control type="text" placeholder="Enter description" value={description} 
-                onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label><h5>Categories</h5></Form.Label>
-                <CategoryTags tags={tags} setTags={setTags}/>
-
-            </Form.Group>
-
-            <Form.Group className="mb-3" controlId="formBasic">
-                <Form.Label><h5>Due Date</h5></Form.Label>
-                <br />
-
-                <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
-                {/* <br />
-                <DatePicker
-                    label="Task Date"
-                    value={date}
-                    onChange={(newDate) => {
-                        setDate(newDate);
-                    }}
-                    renderInput={(params) => <TextField {...params} />}
-                />  */}
-
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
-                    setPriority(e.target.checked ? 1 : 0)
-                    }}/>
-            </Form.Group>
-            <Button type = "submit" variant="primary">Add Task</Button>{' '}
-            </Form>
+                <button type="submit">add</button>
+            </form>
         </AddTaskContainer>
         
-
-//         <form>
-//   <div class="form-group">
-//     <label for="exampleInputEmail1">Email address</label>
-//     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-//     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-//   </div>
-//   <div class="form-group">
-//     <label for="exampleInputPassword1">Password</label>
-//     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"></input>
-//   </div>
-//   <div class="form-check">
-//     <input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-//     <label class="form-check-label" for="exampleCheck1">Check me out</label>
-//   </div>
-//   <button type="submit" class="btn btn-primary">Submit</button>
-// </form>
     )
 }
 
-export default AddTask
+export default AddSubtask
