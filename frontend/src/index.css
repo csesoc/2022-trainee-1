@@ -25,22 +25,24 @@ code {
   margin-bottom: 8%;
 }
 
-.Item {
-  display: flex;
-  flex-basis: 5;
-}
-
 .icon {
   margin-left: auto;
   margin-bottom: 8%;
 }
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 
 .container h2 {
   margin-left: auto;
   color: red;
 }
 
-.container .Item {
+.Item {
+  display: flex;
   margin: auto auto;
   text-align: center;
 }
@@ -49,5 +51,11 @@ code {
   flex-basis: 100%;
   height: 0;
 }
+
+.subtasks {
+  display: flex;
+  flex-direction: column;
+}
+
 
 

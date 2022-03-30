@@ -21,8 +21,6 @@ const AddTask = ({onAdd}) => {
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(0)
-    
-    // TODO: currently can only have one subtask as it is stored as a string
     const [subtasks, setSubtasks] = useState([])
     
     const onSubmit = (e) => {
@@ -41,7 +39,7 @@ const AddTask = ({onAdd}) => {
         setDescription('')
         setDueDate('')
         setTags([])
-        setPriority(0)
+        setPriority(false)
         setSubtasks([])
     }
 
@@ -87,12 +85,6 @@ const AddTask = ({onAdd}) => {
                 onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
             </Form.Group>
 
-            {/* <Form.Group className="mb-3" controlId="formBasicText">
-                <Form.Label><h5>Subtasks</h5></Form.Label>
-                <Form.Control type="text" placeholder="Enter subtask" value={subtasks} 
-                onChange={(e) => setSubTasks(e.target.value)} style={InputStyle}/>
-            </Form.Group> */}
-
             <Form.Group className="mb-3" controlId="formBasicText">
                 <Form.Label><h5>Categories</h5></Form.Label>
                 <CategoryTags tags={tags} setTags={setTags}/>
@@ -101,7 +93,6 @@ const AddTask = ({onAdd}) => {
             <Form.Group className="mb-3" controlId="formBasic">
                 <Form.Label><h5>Due Date</h5></Form.Label>
                 <br />
-
                 <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
             </Form.Group>
 
@@ -111,7 +102,7 @@ const AddTask = ({onAdd}) => {
                     }}/>
             </Form.Group>
 
-            <Button type = "submit" variant="primary">Add Task</Button>{' '}
+            <Button type="submit" variant="primary">Add Task</Button>{' '}
             </Form>
         </AddTaskContainer>
     )

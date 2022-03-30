@@ -17,7 +17,7 @@ export const AddTaskContainer = styled.div`
 
 
 
-const AddSubtask = ({task, onAddSubtask}) => {
+const AddSubtask = ({task, onAddSubtask, closeForm}) => {
     const [subtaskText, setSubtaskText] = useState('')
 
     const [subtasks, setSubtasks] = useState(task.subtasks);
@@ -25,7 +25,7 @@ const AddSubtask = ({task, onAddSubtask}) => {
     
     const onSubmit = (e) => {
         e.preventDefault()
-        
+        closeForm();
         const subtaskMap = new Map();
         subtaskMap.set("task", subtaskText)
         subtaskMap.set("complete", false)

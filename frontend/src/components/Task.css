@@ -1,0 +1,23 @@
+.title-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-container {
+    display: flex;
+    align-self: flex-end;
+    margin: auto auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 12vh;
+}
+
+.title {
+    display: flex;
+    align-self: center;
+    
+}
