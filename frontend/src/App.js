@@ -11,8 +11,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import frLocale from 'date-fns/locale/fr';
 
 
-const default_color = "#D3D3D3"
-const highlight_color = "#A9A9A9"
+const default_color = "#00000"
+const highlight_color = "#eee3e0"
 
 
 function App() {
@@ -37,16 +37,15 @@ function App() {
   }
 
   // this returns all tasks which are in current page category
-  const getTasks = () => {
-    if (currentPage === "Home") {
-      return tasks
-    } else {
-      return tasks.filter((t) => {
-        return t.tags.includes(currentPage)
-      })
-    }
-  }
-
+  // const getTasks = () => {
+  //   if (currentPage === "Home") {
+  //     return tasks
+  //   } else {
+  //     return tasks.filter((t) => {
+  //       return t.tags.includes(currentPage)
+  //     })
+  //   }
+  // }
   
   const addTask = (task) => {
     // import { nanoid } from 'nanoid'
@@ -69,10 +68,38 @@ function App() {
     setTasks(tasks.filter((task) => task.id !== id))
   }
 
+  const editTask = (id, newTitle, newDesc, newDueDate) => {
+    const editedTaskList = tasks.map(task => {
+      // if this task has the same ID as the edited task
+        if (id === task.id) {
+          return {...task, text: newTitle, description: newDesc, dueDate: newDueDate}
+        }
+        return task;
+    });
+
+    setTasks(editedTaskList);
+  }
+
+  const addSubtask = (id, newSubtaskArray) => {
+    const editedTaskList = tasks.map(task => {
+      // if this task has the same ID as the edited task
+        if (id === task.id) {
+          return {...task, subtasks: newSubtaskArray}
+        }
+        return task;
+    });
+
+    setTasks(editedTaskList)
+  }
+
+
+
+
   return (
 
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
+        <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
         {
           toggle === "hidden" ?
           <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
@@ -106,7 +133,7 @@ function App() {
             <h1>Today's Tasks</h1>
             <div>
               <>
-                {tasks.length > 0 ? <TodaysTasks tasks={tasks} onDelete={deleteTask}/> : "No tasks to show"}
+                <TodaysTasks tasks={tasks} onDelete={deleteTask}/>
               </>
             </div>
             </>
@@ -115,7 +142,7 @@ function App() {
         <h1>Tasks</h1>
         <div>
           <>
-            {tasks.length > 0 ? <Tasks tasks={getTasks()} onDelete={deleteTask}/> : "No tasks to show"}
+            {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}
           </>
         </div>
       </div>

@@ -4,8 +4,10 @@
 
 
 .navbar{
+  display: flex;
+  flex-wrap: wrap;
   overflow: hidden;
-  background-color: #0d6ffc;
+  background-color: #94acbc;
   height: 70px;
   font-size: 30px;
   padding: 10px;
@@ -17,8 +19,7 @@
 }
 
 .openbtn{
-  position: fixed;
-  left: 20px;
+  right: 10px;
 }
 
 .sidenav {
@@ -28,7 +29,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: 	#D3D3D3;
+  background-color: 	#d7aca9;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -54,7 +55,7 @@
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #d7aca9;
 }
 
 .sidenav .closebtn {
