@@ -1,0 +1,23 @@
+GET http://127.0.0.1:8000/tasks HTTP/1.1
+
+###
+
+POST http://127.0.0.1:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "post_titlestr",
+    "description": "post_descriptionstr",
+    "categories": ["category_post"],
+    "dueDate": "",
+    "priority": 1
+}
+
+###
+
+DELETE http://127.0.0.1:8000/tasks HTTP/1.1
+Content-Type: application/json
+
+{
+    "idToDelete": "623b1d8208d29bc01d45bccf"
+}
