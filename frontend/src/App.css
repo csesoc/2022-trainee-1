@@ -5,22 +5,27 @@
 
 .navbar{
   display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
   background-color: #94acbc;
-  height: 70px;
   font-size: 30px;
   padding: 10px;
   width: 100%;
   position: -webkit-sticky; /* Safari */
+  position: sticky;
   top: 0;
-  display: block;
   text-align: center;
 }
 
-.openbtn{
-  right: 10px;
+.navTitle{
+  width: -moz-fit-content;
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
 }
+
+/* .openbtn{
+  
+} */
 
 .sidenav {
   height: 100%;
