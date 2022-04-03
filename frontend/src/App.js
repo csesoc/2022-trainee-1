@@ -22,7 +22,6 @@ function App() {
   const [currentPage, setPage] = useState("Home")
   const [toggle, setToggle] = useState("hidden");
 
-
   const handleNavClick = () => {
     console.log("click")
     setToggle(toggle === "open" ? "hidden" : "open")
@@ -46,6 +45,14 @@ function App() {
   //     })
   //   }
   // }
+
+  // on sync issues:
+
+  // !!!!! changes that user makes after clicking add task and before server response will be lost
+  
+  // useState is async. useEffect couldn't overcome this for me
+  // currently setTasks with temp ID, then after the response calls
+  // setTasks with real DB generated ID
   
   const addTask = (task) => {
     // import { nanoid } from 'nanoid'
@@ -61,11 +68,28 @@ function App() {
       }
     }
 
-    setTasks([...tasks, newTask])
+    setTasks([...tasks, newTask]);
+
+    fetch("http://localhost:8000/tasks", {
+      method: "POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(task)
+    }).then(response => {
+      return response.json();
+    }).then(jsonData => {
+      newTask.id = jsonData.newId;
+      setTasks([...tasks, newTask]);
+    });
+
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+    setTasks(tasks.filter((task) => task.id !== id));
+    fetch("http://localhost:8000/tasks", {
+      method: "DELETE",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({"idToDelete" : id})
+    });
   }
 
   const editTask = (id, newTitle, newDesc, newDueDate) => {
