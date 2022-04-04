@@ -15,9 +15,7 @@ export const AddTaskContainer = styled.div`
     background-color: rgba(162, 210, 255, 0.1);
 `
 
-
-
-const AddSubtask = ({task, onAddSubtask, closeForm}) => {
+const AddSubtask = ({ task, onAddSubtask, closeForm, calculateNewProgress }) => {
     const [subtaskText, setSubtaskText] = useState('')
 
     const [subtasks, setSubtasks] = useState(task.subtasks);
@@ -33,8 +31,9 @@ const AddSubtask = ({task, onAddSubtask, closeForm}) => {
 
         // subtasks now includes the subtask we just added
         onAddSubtask(task.id, [...subtasks, subtaskMap])
-    
-        console.log([...subtasks, subtaskMap])
+        
+        console.log(task.subtasks.length)
+        calculateNewProgress();
         // Clear form
         setSubtaskText('')
     }

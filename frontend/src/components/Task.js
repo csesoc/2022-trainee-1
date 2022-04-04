@@ -9,8 +9,11 @@ import DateTimePicker from "@mui/lab/DateTimePicker";
 import TextField from "@mui/material/TextField";
 import AddSubtask from "./AddSubtask";
 import Tasks from "./Tasks";
-import LinearProgress from "@mui/material/LinearProgress";
+import LinearProgress from '@mui/material/LinearProgress';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import './Task.css'
+import Divider from '@mui/material/Divider';
 
 export const TaskContainer = styled.div`
   display: flex;
@@ -24,18 +27,24 @@ export const TaskContainer = styled.div`
   box-shadow: 0px 0px 10px rgba(162, 210, 255, 0.5);
 `;
 
-// display: flex;
-// padding: 0px 20px;
-// align-items: center;
-// height: 120px;
-// width: 600px;
-// margin: 30px 60px;
-// background-color: coral;
-// border-radius: 5px;
-// position: relative;
-// export const CrossFlexBox = styled.div`
-//     margin-left = 30 px;
-// `
+export const PriorityTaskContainer = styled(TaskContainer)`
+  box-shadow: 0px 0px 10px rgba(227, 99, 112, 1);
+`;
+
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ width: '100%', mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value,
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
 
 const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
   const [addingSubtask, setAddingSubtask] = useState(false);
@@ -50,6 +59,10 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
 
   const [dueDate, setDueDate] = useState(task.dueDate);
   const [editDueDate, setEditDueDate] = useState(task.dueDate);
+
+  const [priority, setPriority] = useState(task.priority);
+
+  const [progress, setProgress] = useState(0);
 
   function handleTitleChange(e) {
     setEditTitle(e.target.value);
@@ -82,77 +95,51 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
     );
   });
 
-  // const onAddSubtask = (subtask) => {
-
-  //     console.log(typeof subtask)
-  //     setSubtasks([...task.subtasks, subtask]);
-  //     //console.log(subtasks)
-  //     console.log(`hello + ${subtasks.length}`)
-  // }
-
-  // const editTask = (id, newText) => {
-  //     const editedTaskList = tasks.map(task => {
-  //       // if this task has the same ID as the edited task
-  //         if (id === task.id) {
-  //           return {...task, text: newText}
-  //         }
-  //         return task;
-  //     });
-
-  //     setTasks(editedTaskList);
-  //   }
-
   const onChecked = (t, index) => {
     const newSubtasks = task.subtasks;
     const status = t.get("complete");
     t.set("complete", !status);
     newSubtasks[index] = t;
+
+    setProgress((task.subtasks.filter(t => t.get("complete")).length / task.subtasks.length) * 100)
     onAddSubtask(task.id, newSubtasks);
   };
 
   const displaySubtasks = () => {
-    //console.log(task.subtasks[0].get("complete"))
     return (
       <>
+        {task.subtasks.length > 0 ? <div>Subtasks</div> : <></>}
+        {task.subtasks.length > 0 ? <LinearProgressWithLabel value={progress}/> : <></>}
+
         {task.subtasks &&
           task.subtasks.map((t, index) => (
             <div>
-              <input
-                onClick={() => onChecked(t, index)}
-                type="checkbox"
-              ></input>{" "}
-              {!t.get("complete") ? t.get("task") : <del>{t.get("task")}</del>}
+              <Divider>{index + 1}</Divider>
+              <div className="subtask">
+                <input
+                  type="checkbox"
+                  onClick={() => onChecked(t, index)}
+                  checked={t.get("complete")}
+                    
+                ></input>
+                <div className="subtask-name">{!t.get("complete") ? t.get("task") : <del>{t.get("task")}</del>}</div>
+
+              </div>
+
+              
+              
             </div>
           ))}
       </>
     );
   };
 
-  const viewTemplate = (
-    <TaskContainer>
+  const renderViewTask = () => {
+    return (
+      <>
         <div className="title-container">
             {/* TODO: TEMP FIX FOR CENTERING THE TITLE */}
-            <div className="icon-container">
-                {/* Showing subtasks - Running Man */}
-                <DirectionsRunIcon
-                    className="icon"
-                    style={{ cursor: "pointer", opacity: "0"}}
-                    onClick={() => setAddingSubtask(!addingSubtask)}
-                />        
-                {/* PENCIL */}
-                <ModeEditIcon
-                    className="icon"
-                    style={{ cursor: "pointer", opacity: "0"}}
-                    onClick={() => setEditing(!isEditing)}
-                />
-                {/* DELETING THE TASK - OWL */}
-                <FlutterDashIcon
-                    className="icon"
-                    style={{ cursor: "pointer", opacity: "0"}}
-                    onClick={() => onDelete(task.id)}
-                    />             
-            </div>
-            <p className="title">{task.text}</p>
+            <div className="title">{task.text}</div>
             <div className="icon-container">   
                 {/* Showing subtasks - Running Man */}
                 <DirectionsRunIcon
@@ -174,89 +161,90 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     />
             </div>
         </div>
-      {/* Progress bar that fails to show :(()) */}
-      {/* <LinearProgress className="item" variant="determinate" value="10" /> */}
-      <p className="Item">{task.description}</p>
-      <div className="calendar-container">
-        <FaCalendarAlt style={{ marginBottom: "5px", marginRight: "5px" }} />
-        {task.dueDate.toLocaleString("en-us", {
-          weekday: "long",
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        })}
-      </div>
-      {addingSubtask ? (
-        <AddSubtask
-          className="Item"
-          task={task}
-          onAddSubtask={onAddSubtask}
-          closeForm={() => setAddingSubtask(!addingSubtask)}
-        >
-          {" "}
-        </AddSubtask>
-      ) : (
-        <></>
-      )}
-      <div className="subtasks">{displaySubtasks()}</div>
-    </TaskContainer>
-  );
+        {/* Progress bar that fails to show :(()) */}
+        {/* <LinearProgress className="item" variant="determinate" value="10" /> */}
+        <p className="Item">{task.description}</p>
+        <div className="calendar-container">
+          <FaCalendarAlt style={{ marginBottom: "5px", marginRight: "5px" }} />
+          {task.dueDate.toLocaleString("en-us", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          })}
+        </div>
 
-  const progress = () => {
-    const completed = task.subtasks.filter((t) => t.get("complete")).length;
-    console.log("hello");
-    return completed / task.subtasks.length;
-  };
+        {addingSubtask ? (
+          <AddSubtask
+            className="Item"
+            task={task}
+            onAddSubtask={onAddSubtask}
+            closeForm={() => setAddingSubtask(!addingSubtask)}
+            calculateNewProgress={() => setProgress((task.subtasks.filter(t => t.get("complete")).length / (task.subtasks.length + 1)) * 100)}
+          >
+            {" "}
+          </AddSubtask>
+        ) : (
+          <></>
+        )}
+        <div className="subtasks">{displaySubtasks()}</div>
+      </>
+    )
+  }
 
-  const editingTemplate = (
-    <TaskContainer>
-        <form className="form-container" onSubmit={handleEditSubmit}>
+  const viewTemplate = () => {
+    return task.priority ? <PriorityTaskContainer>{renderViewTask()}</PriorityTaskContainer> : <TaskContainer>{renderViewTask()}</TaskContainer>;
+  }
+
+  const renderEditTask = () => {
+    return (
+      <>
+       <form className="form-container" onSubmit={handleEditSubmit}>
             <div className="title-container">
-                <p className="Item">{task.text}</p>
-                <div className="icon-container">   
-                    {/* Showing subtasks - Running Man */}
-                    <DirectionsRunIcon
-                        className="icon"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => setAddingSubtask(!addingSubtask)}
-                    />        
-                    {/* PENCIL */}
-                    <button type="submit">
-                        <ModeEditIcon
-                            className="icon"
-                            style={{ cursor: "pointer" }}
-                        />
-                    </button>
-                    {/* DELETING THE TASK - OWL */}
-                    <FlutterDashIcon
-                        className="icon"
-                        style={{ cursor: "pointer" }}
-                        onClick={() => onDelete(task.id)}
-                        />
-                </div>
+              <div className="form-group Item title">
+                <input
+                    className="task-text edit-input"
+                    value={editTitle}
+                    type="text"
+                    onChange={handleTitleChange}
+                    />
+              </div>
+              <div className="icon-container">   
+                  {/* Showing subtasks - Running Man */}
+                  <DirectionsRunIcon
+                      className="icon"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setAddingSubtask(!addingSubtask)}
+                  />        
+                  {/* PENCIL */}
+                  <button type="submit" className="override-button">
+                      <ModeEditIcon
+                          className="icon"
+                          style={{ cursor: "pointer" }}
+                      />
+                  </button>
+                  {/* DELETING THE TASK - OWL */}
+                  <FlutterDashIcon
+                      className="icon"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => onDelete(task.id)}
+                      />
+              </div>
             </div>
+            
+
+
             <div className="form-group Item">
-            {/* <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/> */}
-            <input
-                className="task-text"
-                value={editTitle}
-                type="text"
-                onChange={handleTitleChange}
-                />
+              <input
+                  className="task-text edit-input"
+                  value={editDescription}
+                  type="text"
+                  onChange={handleDescChange}
+                  />
             </div>
-            <div className="form-group Item">
-            {/* <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/> */}
-            <input
-                className="task-text"
-                value={editDescription}
-                type="text"
-                onChange={handleDescChange}
-                />
-            </div>
-            {/* <div as={customDatePicker} value={editDueDate} onChange={(e) => setEditDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/> */}
-            <p className="Item">{task.description}</p>
+
             <div className="calendar-container">
                 <FaCalendarAlt style={{ marginBottom: "5px", marginRight: "5px" }} />
                 {task.dueDate.toLocaleString("en-us", {
@@ -268,25 +256,33 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                 minute: "numeric",
                 })}
             </div>
-            {addingSubtask ? (
-            <AddSubtask
-                className="Item"
-                task={task}
-                onAddSubtask={onAddSubtask}
-                closeForm={() => setAddingSubtask(!addingSubtask)}
-            >
-                {" "}
-            </AddSubtask>
-            ) : (
-            <></>
-            )}
-            <p>{displaySubtasks()}</p>
+
+        {addingSubtask ? (
+          <AddSubtask
+            className="Item"
+            task={task}
+            onAddSubtask={onAddSubtask}
+            closeForm={() => setAddingSubtask(!addingSubtask)}
+            calculateNewProgress={() => setProgress((task.subtasks.filter(t => t.get("complete")).length / (task.subtasks.length + 1)) * 100)}
+          >
+            {" "}
+          </AddSubtask>
+        ) : (
+          <></>
+        )}
+
+          <div className="subtasks">{displaySubtasks()}</div>
         </form>
-    </TaskContainer>
-  );
+      </>
+    )
+  }
+
+  const editingTemplate = () => {
+    return task.priority ? <PriorityTaskContainer>{renderEditTask()}</PriorityTaskContainer> : <TaskContainer>{renderEditTask()}</TaskContainer>
+  } 
 
   return (
-    <div className="todo">{isEditing ? editingTemplate : viewTemplate}</div>
+    <div className="todo">{isEditing ? editingTemplate() : viewTemplate()}</div>
   );
 };
 
