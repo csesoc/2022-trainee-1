@@ -99,16 +99,18 @@ function App() {
 
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
-        <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
-        {
-          toggle === "hidden" ?
-          <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
-          onClick={handleNavClick}>&#9776;</span> : ""
-        }
+        <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
+        onClick={handleNavClick}>&#9776;</span>
+        <div className="navTitle">
+          <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
+        </div>
       </div>
+
       <div className="App">
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
+
         {showAddTask && <AddTask onAdd={addTask}/>}
+
         <div id={toggle} className="sidenav">
           <a href="/#" className="closebtn" 
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
@@ -127,6 +129,7 @@ function App() {
             )
           }
         </div>
+
         { // we only show Today's Tasks on the Home Page
           currentPage === "Home" ?
           <>
@@ -139,7 +142,9 @@ function App() {
             </>
           : ""
         }
+
         <h1>Tasks</h1>
+        
         <div>
           <>
             {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}

@@ -20,7 +20,7 @@ const AddTask = ({onAdd}) => {
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState([])
-    const [priority, setPriority] = useState(0)
+    const [priority, setPriority] = useState(false)
     const [subtasks, setSubtasks] = useState([])
     
     const onSubmit = (e) => {
@@ -98,7 +98,7 @@ const AddTask = ({onAdd}) => {
 
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
-                    setPriority(e.target.checked ? 1 : 0)
+                    setPriority(e.target.checked)
                     }}/>
             </Form.Group>
 
