@@ -66,6 +66,8 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
 
     const [progress, setProgress] = useState(0);
 
+    const [tag, setTag] = useState(task.tag);
+
     function handleTitleChange(e) {
         setEditTitle(e.target.value);
     }
@@ -315,6 +317,17 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     )}
 
                     <div className="subtasks">{displaySubtasks()}</div>
+                    
+                    {task.tag ? 
+                    <div className="tags">
+                        <LocalOfferIcon style={{"width": "1em", "height": "0.8em", "color": "#808080"}}/> 
+                        <div className="tagname">
+                            {task.tag["tag"]}
+                        </div>
+                    </div>
+                    : <></>
+                    }
+
                 </form>
             </>
         );

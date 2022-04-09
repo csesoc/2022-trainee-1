@@ -16,15 +16,13 @@ export const AddTaskContainer = styled.div`
     background-color: rgba(162, 210, 255, 0.1);
 `
 
-const AddTask = ({onAdd}) => {
+const AddTask = ({onAdd, globalTags, setGlobalTags}) => {
     const [text, setText] = useState('')
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
     const [tag, setTag] = useState(null);
     const [priority, setPriority] = useState(false)
     const [subtasks, setSubtasks] = useState([])
-
-    const [globalTags, setGlobalTags] = useState([])
 
     const onSubmit = (e) => {
         e.preventDefault()

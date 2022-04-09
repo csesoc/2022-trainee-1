@@ -18,7 +18,7 @@ const highlight_color = "#c4c9d3"
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([]);
-  const [allTags, setAllTags] = useState([]);
+  const [globalTags, setGlobalTags] = useState([])
   const [currentPage, setPage] = useState("Home")
   const [toggle, setToggle] = useState("hidden");
 
@@ -27,11 +27,7 @@ function App() {
   }
 
   const handlePageClick = (page) => {
-    if (allTags.includes(page) || page === "Home") {
-      setPage(page)
-    } else {
-      console.log("%s not valid page", page)
-    }
+    setPage(page);
   }
 
   // this returns all tasks which are in current page category
@@ -116,38 +112,42 @@ function App() {
   }
 
 
-
-
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
+        {/* three lines */}
         <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
         onClick={handleNavClick}>&#9776;</span>
+        
         <div className="navTitle">
-          <h1 style={{"text-align": "center", "color": "#D5E8EF"}}> TO BE DONE </h1>
+          <h1 style={{"text-align": "center", "color": "#D5E8EF", "padding-top": "8px"}}> TO BE DONE </h1>
         </div>
       </div>
+
 
       <div className="App">
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
 
-        {showAddTask && <AddTask onAdd={addTask}/>}
+        {showAddTask && <AddTask onAdd={addTask} globalTags={globalTags} setGlobalTags={setGlobalTags}/>}
+        
 
         <div id={toggle} className="sidenav">
           <a href="/#" className="closebtn" 
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
-            &times;</a>
+            &times;
+          </a>
+
           <a href="/#" style={{
             "background-color": currentPage === "Home" ? highlight_color : default_color
             }}
-          
             onClick={(e) => 
             {e.preventDefault(); handlePageClick("Home")}}>Home</a>
+
           { //this renders every category inside the sidebar
-            allTags.map((tag) => 
-              <a key={tag.concat("Page")}href="/#" style={{
-                "background-color": currentPage === tag ? highlight_color : default_color}}
-                onClick={(e) => {e.preventDefault(); handlePageClick(tag)}}>{tag}</a>
+            globalTags.map((tag) => 
+              <a key={tag["tag"].concat("Page")} href="/#" style={{
+                "background-color": currentPage === tag["tag"] ? highlight_color : default_color}}
+                onClick={(e) => {e.preventDefault(); handlePageClick(tag["tag"])}}>{tag["tag"]}</a>
             )
           }
         </div>
@@ -162,14 +162,14 @@ function App() {
               </>
             </div>
             </>
-          : ""
+          : <></>
         }
 
-        <h1>Tasks</h1>
+        <h1>{currentPage === "Home" ? "" : currentPage} Tasks</h1>
         
         <div>
           <>
-            {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}
+            {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask} currentPage={currentPage}/> : "No tasks to show"}
           </>
         </div>
       </div>
