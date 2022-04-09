@@ -68,18 +68,18 @@ const Task = ({task, onDelete}) => {
             <h2> Title </h2>
             <FaTimes className='Cross' style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)} />
             
-            <div class='break'></div>
+            <div className='break'></div>
 
             <p className='Item'>{task.text}</p>
             {/* <input className='Item' value={editingTextValue} onChange={onTextChange} onKeyDown={onKeyDown} onBlur={onTextBlur}/> */}
 
-            <div class='break'></div>
+            <div className='break'></div>
 
             {/* <input className='Item' value={editingDescValue} onChange={onDescChange} onKeyDown={onKeyDown} onBlur={onDescBlur}/> */}
             
             <p className='Item'>{task.description}</p>
             
-            <div class='break'></div>
+            <div className='break'></div>
 
             {/* <h3 onMouseEnter={changeBackground} onMouseLeave={defaultBackground}>{task.text} </h3> */}
             {/* <p>{task.description}</p> */}

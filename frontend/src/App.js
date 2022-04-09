@@ -42,7 +42,7 @@ function App() {
       return tasks
     } else {
       return tasks.filter((t) => {
-        return t.tags.includes(currentPage)
+        t.tags.includes(currentPage)
       })
     }
   }
@@ -75,7 +75,7 @@ function App() {
       <div className="navbar">
         {
           toggle === "hidden" ?
-          <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
+          <span className="openbtn" style={{"fontSize": "30px", "cursor": "pointer"}} 
           onClick={handleNavClick}>&#9776;</span> : ""
         }
       </div>
@@ -87,7 +87,7 @@ function App() {
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
             &times;</a>
           <a href="/#" style={{
-            "background-color": currentPage === "Home" ? highlight_color : default_color
+            "backgroundColor": currentPage === "Home" ? highlight_color : default_color
             }}
           
             onClick={(e) => 

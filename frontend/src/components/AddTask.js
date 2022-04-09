@@ -5,6 +5,8 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import CategoryTags from './CategoryTags';
+import { addEvent, editEvent, removeEvent } from './GoogleCalendar';
+import { setDate } from 'date-fns';
 
 export const AddTaskContainer = styled.div`
     margin: 30px auto;
@@ -21,7 +23,7 @@ const AddTask = ({onAdd}) => {
     const [dueDate, setDueDate] = useState('')
     const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(0)
-
+    const [addToCalendar, setCalendar] = useState(false)
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -32,6 +34,12 @@ const AddTask = ({onAdd}) => {
             return
         }
 
+        // Google calendar integration
+        // figure out how startTime stuff works
+        if (addToCalendar) {
+            addEvent(text, description, "temp", priority)
+        }
+
         onAdd({text, description, dueDate, tags, priority})
 
         // Clear form
@@ -40,9 +48,12 @@ const AddTask = ({onAdd}) => {
         setDueDate('')
         setTags([])
         setPriority(0)
+        setCalendar(false)
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
+        // keep as date format
+
         return (
             <DateTimePicker
             label="Task Date"
@@ -68,6 +79,15 @@ const AddTask = ({onAdd}) => {
         borderRadius: "2px", 
         background: "#f6faff"
     }
+
+    document.addEventListener('keypress', function (e) {
+        // this prevents enter from submitting form
+        if (e.key === "Enter") {
+            e.preventDefault();
+            return false;
+        }
+        
+    });
 
     return (
         // <form classname='add-form' onSubmit={onSubmit}>
@@ -128,6 +148,12 @@ const AddTask = ({onAdd}) => {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
                     setPriority(e.target.checked ? 1 : 0)
+                    }}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formCalendarCheckbox">
+                <Form.Check type="checkbox" label="Add to Google Calendar" 
+                value={addToCalendar} onChange={(e) => {
+                    setCalendar(e.target.checked ? true: false)
                     }}/>
             </Form.Group>
             <Button type = "submit" variant="primary">Add Task</Button>{' '}
