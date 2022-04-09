@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import "./Task.css";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 
 export const TaskContainer = styled.div`
     display: flex;
@@ -148,6 +149,16 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
         );
     };
 
+    const showDate = () => {
+        return task.dueDate.toLocaleString("en-us", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+        })
+    }
     const renderViewTask = () => {
         return (
             <>
@@ -179,17 +190,10 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                 {/* <LinearProgress className="item" variant="determinate" value="10" /> */}
                 <p className="Item">{task.description}</p>
                 <div className="calendar-container">
-                    <FaCalendarAlt
+                    {showDate().length ? <FaCalendarAlt
                         style={{ marginBottom: "5px", marginRight: "5px" }}
-                    />
-                    {task.dueDate.toLocaleString("en-us", {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                        hour: "numeric",
-                        minute: "numeric",
-                    })}
+                    /> : <></>}
+                    {showDate()}
                 </div>
 
                 {addingSubtask ? (
@@ -230,9 +234,9 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
             <>
                 <form className="form-container" onSubmit={handleEditSubmit}>
                     <div className="title-container">
-                        <div className="form-group Item title">
+                        <div className="form-group">
                             <input
-                                className="task-text edit-input"
+                                className="edit-input title"
                                 value={editTitle}
                                 type="text"
                                 onChange={handleTitleChange}
@@ -270,17 +274,10 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     </div>
 
                     <div className="calendar-container">
-                        <FaCalendarAlt
+                        {showDate().length ? <FaCalendarAlt
                             style={{ marginBottom: "5px", marginRight: "5px" }}
-                        />
-                        {task.dueDate.toLocaleString("en-us", {
-                            weekday: "long",
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                            hour: "numeric",
-                            minute: "numeric",
-                        })}
+                        /> : <></>}
+                        {showDate()}
                     </div>
 
                     {addingSubtask ? (

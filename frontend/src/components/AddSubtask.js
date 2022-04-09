@@ -35,11 +35,14 @@ const AddSubtask = ({
         // subtasks now includes the subtask we just added
         onAddSubtask(task.id, [...subtasks, subtaskMap]);
 
-        console.log(task.subtasks.length);
         calculateNewProgress();
         // Clear form
         setSubtaskText("");
     };
+
+    const hasSubtaskText = () => {
+        return subtaskText.length
+    }
 
     return (
         <AddTaskContainer className="AddTaskContainer">
@@ -47,7 +50,8 @@ const AddSubtask = ({
                 <div className="form-group">
                     <input
                         className="task-text"
-                        placeholder="Add Subtask"
+                        placeholder="Enter subtask"
+                        style={{"text-align": "center"}}
                         type="text"
                         value={subtaskText}
                         onChange={(e) => setSubtaskText(e.target.value)}
@@ -57,6 +61,7 @@ const AddSubtask = ({
                 <Button
                     variant="outlined"
                     type="submit"
+                    disabled={!hasSubtaskText()}
                     startIcon={<ModeEditIcon />}
                 >
                     Add

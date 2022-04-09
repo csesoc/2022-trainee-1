@@ -6,7 +6,6 @@ const Header = ({title, onAdd, showAdd}) => {
     return (
       <header className='header'>
           <div>
-            <h1>{title}</h1>
             <AddTaskIcon onClick={onAdd}/>
           </div>
       </header>

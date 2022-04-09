@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
+import Button from "@mui/material/Button";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Form from 'react-bootstrap/Form';
 import DateTimePicker from '@mui/lab/DateTimePicker'; 
 import TextField from '@mui/material/TextField';
@@ -29,6 +30,11 @@ const AddTask = ({onAdd}) => {
         // TODO: maybe instead of alerting you just can't submit the form without the title? (like in Google Forms)
         if (!text) {
             alert('Please add a task title')
+            return
+        }
+
+        if (dueDate && dueDate < Date.now()) {
+            alert('Please enter a time in the future')
             return
         }
 
@@ -96,13 +102,19 @@ const AddTask = ({onAdd}) => {
                 <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3" style={{"display": "flex", "justify-content": "center"}} controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
                     setPriority(e.target.checked)
                     }}/>
             </Form.Group>
 
-            <Button type="submit" variant="primary">Add Task</Button>{' '}
+            <Button
+                variant="outlined"
+                type="submit"
+                startIcon={<ModeEditIcon />}
+                >
+                Add
+            </Button>
             </Form>
         </AddTaskContainer>
     )
