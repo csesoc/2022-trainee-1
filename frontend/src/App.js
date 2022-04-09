@@ -47,15 +47,16 @@ function App() {
     });
   }, []);
   // this returns all tasks which are in current page category
-  // const getTasks = () => {
-  //   if (currentPage === "Home") {
-  //     return tasks
-  //   } else {
-  //     return tasks.filter((t) => {
-  //       return t.tags.includes(currentPage)
-  //     })
-  //   }
-  // }
+
+  const getTasks = () => {
+    if (currentPage === "Home") {
+      return tasks
+    } else {
+      return tasks.filter((t) => {
+        t.tags.includes(currentPage)
+      })
+    }
+  }
 
   // on sync issues:
 
@@ -140,7 +141,13 @@ function App() {
         <div className="navTitle">
           <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
         </div>
-      </div>
+
+//         {
+//           toggle === "hidden" ?
+//           <span className="openbtn" style={{"fontSize": "30px", "cursor": "pointer"}} 
+//           onClick={handleNavClick}>&#9776;</span> : ""
+//         }
+
 
       <div className="App">
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
@@ -152,7 +159,7 @@ function App() {
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
             &times;</a>
           <a href="/#" style={{
-            "background-color": currentPage === "Home" ? highlight_color : default_color
+            "backgroundColor": currentPage === "Home" ? highlight_color : default_color
             }}
           
             onClick={(e) => 

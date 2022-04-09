@@ -6,6 +6,8 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import CategoryTags from './CategoryTags';
+import { addEvent, editEvent, removeEvent } from './GoogleCalendar';
+import { setDate } from 'date-fns';
 
 export const AddTaskContainer = styled.div`
     margin: 30px auto;
@@ -23,6 +25,7 @@ const AddTask = ({onAdd}) => {
     const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(false)
     const [subtasks, setSubtasks] = useState([])
+    const [addToCalendar, setCalendar] = useState(false)
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -33,9 +36,16 @@ const AddTask = ({onAdd}) => {
             return
         }
 
+
         if (dueDate && dueDate < Date.now()) {
             alert('Please enter a time in the future')
             return
+        }
+      
+        // Google calendar integration
+        // figure out how startTime stuff works
+        if (addToCalendar) {
+            addEvent(text, description, "temp", priority)
         }
 
         onAdd({text, description, dueDate, tags, priority, subtasks})
@@ -45,11 +55,16 @@ const AddTask = ({onAdd}) => {
         setDescription('')
         setDueDate('')
         setTags([])
+
         setPriority(false)
         setSubtasks([])
+        setCalendar(false)
+
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
+        // keep as date format
+
         return (
             <DateTimePicker
             label="Task Date"
@@ -75,6 +90,15 @@ const AddTask = ({onAdd}) => {
         borderRadius: "2px", 
         background: "#f6faff"
     }
+
+    document.addEventListener('keypress', function (e) {
+        // this prevents enter from submitting form
+        if (e.key === "Enter") {
+            e.preventDefault();
+            return false;
+        }
+        
+    });
 
     return (
         <AddTaskContainer className='AddTaskContainer'>
@@ -108,6 +132,13 @@ const AddTask = ({onAdd}) => {
                     }}/>
             </Form.Group>
 
+            <Form.Group className="mb-3" controlId="formCalendarCheckbox">
+                <Form.Check type="checkbox" label="Add to Google Calendar" 
+                value={addToCalendar} onChange={(e) => {
+                    setCalendar(e.target.checked ? true: false)
+                    }}/>
+            </Form.Group>
+
             <Button
                 variant="outlined"
                 type="submit"
@@ -115,6 +146,7 @@ const AddTask = ({onAdd}) => {
                 >
                 Add
             </Button>
+            
             </Form>
         </AddTaskContainer>
     )

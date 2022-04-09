@@ -32,6 +32,7 @@ export const PriorityTaskContainer = styled(TaskContainer)`
 
 function LinearProgressWithLabel(props) {
     return (
+
         <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box sx={{ width: "100%", mr: 1 }}>
                 <LinearProgress variant="determinate" {...props} />
@@ -44,6 +45,7 @@ function LinearProgressWithLabel(props) {
             </Box>
         </Box>
     );
+
 }
 
 const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
