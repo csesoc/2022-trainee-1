@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button';
+import Button from "@mui/material/Button";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Form from 'react-bootstrap/Form';
 import DateTimePicker from '@mui/lab/DateTimePicker'; 
 import TextField from '@mui/material/TextField';
@@ -17,11 +18,10 @@ export const AddTaskContainer = styled.div`
 
 
 
-const AddSubtask = ({task, onAddSubtask, closeForm}) => {
+const AddSubtask = ({task, onAddSubtask, closeForm, calculateNewProgress }) => {
     const [subtaskText, setSubtaskText] = useState('')
 
     const [subtasks, setSubtasks] = useState(task.subtasks);
-    //const [editSubtask, setEditSubtask] = useState(task.subtasks);
     
     const onSubmit = (e) => {
         e.preventDefault()
@@ -32,21 +32,39 @@ const AddSubtask = ({task, onAddSubtask, closeForm}) => {
         setSubtasks([...subtasks, subtaskMap])
 
         // subtasks now includes the subtask we just added
-        onAddSubtask(task.id, [...subtasks, subtaskMap])
-    
-        console.log([...subtasks, subtaskMap])
+        onAddSubtask(task.id, [...subtasks, subtaskMap]);
+
+        calculateNewProgress();
         // Clear form
         setSubtaskText('')
+    }
+
+    const hasSubtaskText = () => {
+        return subtaskText.length
     }
 
     return (
         <AddTaskContainer className='AddTaskContainer'>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <input className="task-text" placeholder="add subtask" type="text" value={subtaskText} onChange={(e) => setSubtaskText(e.target.value)}/>
+                    <input
+                        className="task-text"
+                        placeholder="Enter subtask"
+                        style={{"text-align": "center"}}
+                        type="text"
+                        value={subtaskText}
+                        onChange={(e) => setSubtaskText(e.target.value)}
+                    />
                 </div>
-
-                <button type="submit">add</button>
+                <br></br>
+                <Button
+                    variant="outlined"
+                    type="submit"
+                    disabled={!hasSubtaskText()}
+                    startIcon={<ModeEditIcon />}
+                >
+                    Add
+                </Button>
             </form>
         </AddTaskContainer>
         
