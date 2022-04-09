@@ -84,6 +84,17 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
         setEditing(false);
     }
 
+    // submits using enter key
+    function handleEnter(e) {
+        if (e.key === "Enter") {
+            setTitle(editTitle);
+            setDescription(editDescription);
+            setDueDate(editDueDate);
+            onEdit(task.id, editTitle, editDescription, editDueDate);
+            setEditing(false);
+        }
+    }
+
     const customDatePicker = React.forwardRef((props, ref) => {
         return (
             <DateTimePicker
@@ -242,6 +253,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                                 value={editTitle}
                                 type="text"
                                 onChange={handleTitleChange}
+                                onKeyDown={handleEnter}
                             />
                         </div>
                         <div className="icon-container">
@@ -272,6 +284,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                             value={editDescription}
                             type="text"
                             onChange={handleDescChange}
+                            onKeyDown={handleEnter}
                         />
                     </div>
 

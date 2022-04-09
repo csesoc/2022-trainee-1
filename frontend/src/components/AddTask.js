@@ -6,7 +6,7 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import CategoryTags from './CategoryTags';
-import { addEvent, editEvent, removeEvent } from './GoogleCalendar';
+import { addEvent } from './GoogleCalendar';
 import { setDate } from 'date-fns';
 
 export const AddTaskContainer = styled.div`
@@ -48,7 +48,7 @@ const AddTask = ({onAdd}) => {
             addEvent(text, description, "temp", priority)
         }
 
-        onAdd({text, description, dueDate, tags, priority, subtasks})
+        onAdd({text, description, dueDate, tags, priority, subtasks, addToCalendar})
 
         // Clear form
         setText('')
@@ -97,7 +97,6 @@ const AddTask = ({onAdd}) => {
             e.preventDefault();
             return false;
         }
-        
     });
 
     return (
@@ -126,23 +125,23 @@ const AddTask = ({onAdd}) => {
                 <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" style={{"display": "flex", "justify-content": "center"}} controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="High Priority" onChange={(e) => {
-                    setPriority(e.target.checked)
-                    }}/>
+            <Form.Group className="mb-3" style={{"display": "flex", "justifyContent": "center"}} controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="High Priority" checked={priority}
+                onChange={(e) => {setPriority(e.target.checked)}}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formCalendarCheckbox">
-                <Form.Check type="checkbox" label="Add to Google Calendar" 
-                value={addToCalendar} onChange={(e) => {
-                    setCalendar(e.target.checked ? true: false)
-                    }}/>
+            <Form.Group className="mb-3" style={{"display": "flex", "justifyContent": "center"}} controlId="formBasic">
+                <Form.Check type="checkbox" label="Add to Google Calendar" checked={addToCalendar}
+                onChange={(e) => {setCalendar(e.target.checked)}}/>
             </Form.Group>
 
             <Button
                 variant="outlined"
                 type="submit"
                 startIcon={<ModeEditIcon />}
+                style={{"zIndex": 1}}
+                // if we want background particles to show over navbar, we
+                // need to find where to change zIndex of particles
                 >
                 Add
             </Button>

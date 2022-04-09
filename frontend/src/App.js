@@ -4,6 +4,7 @@ import AddTask from './components/AddTask';
 //import Task from './components/Task';
 import Tasks from './components/Tasks';
 import TodaysTasks from './components/TodaysTasks';
+import {removeEvent, editEvent} from "./components/GoogleCalendar"
 import './App.css';
 //import Button from 'react-bootstrap/Button';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -23,7 +24,6 @@ function App() {
   const [toggle, setToggle] = useState("hidden");
 
   const handleNavClick = () => {
-    console.log("click")
     setToggle(toggle === "open" ? "hidden" : "open")
   }
 
@@ -53,7 +53,7 @@ function App() {
       return tasks
     } else {
       return tasks.filter((t) => {
-        t.tags.includes(currentPage)
+        return t.tags.includes(currentPage)
       })
     }
   }
@@ -96,7 +96,13 @@ function App() {
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task._id !== id));
+    setTasks(tasks.filter((task) => {
+      if (task._id === id && task.addToCalendar) {
+        // removed from calendar if applicable
+        removeEvent(task.text)
+      } 
+      return task._id !== id
+    }))
     fetch("http://localhost:8000/tasks", {
       method: "DELETE",
       headers: {'Content-Type': 'application/json'},
@@ -105,10 +111,20 @@ function App() {
     console.log(id);
   }
 
+  // should this be using ._id??
   const editTask = (id, newTitle, newDesc, newDueDate) => {
     const editedTaskList = tasks.map(task => {
       // if this task has the same ID as the edited task
         if (id === task.id) {
+          if (task.addToCalendar) {
+            //we edit in google calendar
+            editEvent(task.text, {
+              summary: newTitle,
+              description: newDesc,
+              //newDueDate??
+            })
+          }
+
           return {...task, text: newTitle, description: newDesc, dueDate: newDueDate}
         }
         return task;
@@ -133,7 +149,6 @@ function App() {
 
 
   return (
-
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
         <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
@@ -141,13 +156,7 @@ function App() {
         <div className="navTitle">
           <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
         </div>
-
-//         {
-//           toggle === "hidden" ?
-//           <span className="openbtn" style={{"fontSize": "30px", "cursor": "pointer"}} 
-//           onClick={handleNavClick}>&#9776;</span> : ""
-//         }
-
+      </div>
 
       <div className="App">
         <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask}/>
@@ -158,17 +167,17 @@ function App() {
           <a href="/#" className="closebtn" 
           onClick={(e) => {e.preventDefault(); handleNavClick()}}>
             &times;</a>
-          <a href="/#" style={{
-            "backgroundColor": currentPage === "Home" ? highlight_color : default_color
-            }}
+          <a href="/#" 
+          // I cannot figure out why this isn't working -> state IS updating
+          // style={{"backgroundColor": currentPage === "Home" ? highlight_color : default_color}}
           
             onClick={(e) => 
             {e.preventDefault(); handlePageClick("Home")}}>Home</a>
           { //this renders every category inside the sidebar
             allTags.map((tag) => 
-              <a key={tag.concat("Page")}href="/#" style={{
-                "background-color": currentPage === tag ? highlight_color : default_color}}
-                onClick={(e) => {e.preventDefault(); handlePageClick(tag)}}>{tag}</a>
+              <a key={tag.concat("Page")} href="/#" 
+              //style={{"backgroundColor": currentPage === tag ? highlight_color : default_color}}
+              onClick={(e) => {e.preventDefault(); handlePageClick(tag)}}>{tag}</a>
             )
           }
         </div>
@@ -190,7 +199,7 @@ function App() {
         
         <div>
           <>
-            {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}
+            {tasks.length > 0 ? <Tasks tasks={getTasks()} onDelete={deleteTask} onEdit={editTask} onAddSubtask={addSubtask}/> : "No tasks to show"}
           </>
         </div>
       </div>
