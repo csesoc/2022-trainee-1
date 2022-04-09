@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './components/Header';
 import AddTask from './components/AddTask';
 //import Task from './components/Task';
@@ -35,6 +35,17 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    fetch("http://localhost:8000/tasks", {
+      method: "GET",
+    }).then(response => {
+      return response.json();
+    }).then(jsonData => {
+      setTasks(jsonData);
+      console.log(jsonData);
+      console.log("fetched from backend");
+    });
+  }, []);
   // this returns all tasks which are in current page category
   // const getTasks = () => {
   //   if (currentPage === "Home") {
@@ -77,19 +88,20 @@ function App() {
     }).then(response => {
       return response.json();
     }).then(jsonData => {
-      newTask.id = jsonData.newId;
+      newTask._id = jsonData.newId;
       setTasks([...tasks, newTask]);
     });
 
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks(tasks.filter((task) => task._id !== id));
     fetch("http://localhost:8000/tasks", {
       method: "DELETE",
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({"idToDelete" : id})
     });
+    console.log(id);
   }
 
   const editTask = (id, newTitle, newDesc, newDueDate) => {

@@ -182,7 +182,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                         <FlutterDashIcon
                             className="icon"
                             style={{ cursor: "pointer" }}
-                            onClick={() => onDelete(task.id)}
+                            onClick={() => onDelete(task._id)}
                         />
                     </div>
                 </div>
@@ -260,7 +260,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                             <FlutterDashIcon
                                 className="icon"
                                 style={{ cursor: "pointer" }}
-                                onClick={() => onDelete(task.id)}
+                                onClick={() => onDelete(task._id)}
                             />
                         </div>
                     </div>
