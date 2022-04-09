@@ -72,7 +72,6 @@ function App() {
     const id = Math.floor(Math.random() * 10000) + 1
     const newTask = {id, ...task}
     
-    // keep tags sorted in some way here????/
     for (const tag of task.tags) {
       //adds tag to list of all tags if doesnt already exist
       if (!allTags.includes(tag)) {
@@ -96,13 +95,36 @@ function App() {
   }
 
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => {
-      if (task._id === id && task.addToCalendar) {
-        // removed from calendar if applicable
-        removeEvent(task.text)
-      } 
+
+    let removedTask;
+    let newTasks = tasks.filter((task) => {
+      if (task._id === id) {
+        removedTask = task
+        if (task.addToCalendar) {
+          // removed from calendar if applicable
+          removeEvent(task.text)
+        }
+      }
       return task._id !== id
-    }))
+    })
+    setTasks(newTasks)
+
+    //check if categories still exist
+    let newTags = allTags
+    for (const tag of removedTask.tags) {
+      let temp = newTasks.filter((t) => t.tags.includes(tag))
+      //console.log("Yeet:", tag, temp)
+      if (temp.length === 0) {
+        //we remove category
+        newTags = newTags.filter((t) => t !== tag)
+        if (currentPage === tag) {
+          setPage("Home")
+        }
+      }
+    }
+    setAllTags(newTags)
+
+
     fetch("http://localhost:8000/tasks", {
       method: "DELETE",
       headers: {'Content-Type': 'application/json'},
