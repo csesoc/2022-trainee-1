@@ -11,8 +11,8 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import frLocale from 'date-fns/locale/fr';
 
 
-const default_color = "#00000"
-const highlight_color = "#eee3e0"
+const default_color = "#a7b0bf"
+const highlight_color = "#c4c9d3"
 
 
 function App() {
@@ -23,7 +23,6 @@ function App() {
   const [toggle, setToggle] = useState("hidden");
 
   const handleNavClick = () => {
-    console.log("click")
     setToggle(toggle === "open" ? "hidden" : "open")
   }
 
@@ -60,13 +59,13 @@ function App() {
     const id = Math.floor(Math.random() * 10000) + 1
     const newTask = {id, ...task}
     
-    // keep tags sorted in some way here????/
-    for (const tag of task.tags) {
-      //adds tag to list of all tags if doesnt already exist
-      if (!allTags.includes(tag)) {
-        setAllTags( allTags => [...allTags, tag])
-      }
-    }
+    // // keep tags sorted in some way here????/
+    // for (const tag of task.tags) {
+    //   //adds tag to list of all tags if doesnt already exist
+    //   if (!allTags.includes(tag)) {
+    //     setAllTags( allTags => [...allTags, tag])
+    //   }
+    // }
 
     setTasks([...tasks, newTask]);
 
@@ -120,13 +119,12 @@ function App() {
 
 
   return (
-
     <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
       <div className="navbar">
         <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
         onClick={handleNavClick}>&#9776;</span>
         <div className="navTitle">
-          <h1 style={{"text-align": "center", "color": "#eed1ac"}}> TO BE DONE </h1>
+          <h1 style={{"text-align": "center", "color": "#D5E8EF"}}> TO BE DONE </h1>
         </div>
       </div>
 

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import styled from "styled-components";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import FlutterDashIcon from "@mui/icons-material/FlutterDash";
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import CancelIcon from '@mui/icons-material/Cancel';
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import TextField from "@mui/material/TextField";
@@ -12,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import "./Task.css";
 import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
+import LocalOfferIcon from '@mui/icons-material/LocalOffer';
 
 export const TaskContainer = styled.div`
     display: flex;
@@ -167,7 +168,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     <div className="title">{task.text}</div>
                     <div className="icon-container">
                         {/* Showing subtasks - Running Man */}
-                        <DirectionsRunIcon
+                        <FormatListBulletedIcon
                             className="icon"
                             style={{ cursor: "pointer" }}
                             onClick={() => setAddingSubtask(!addingSubtask)}
@@ -179,8 +180,8 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                             onClick={() => setEditing(!isEditing)}
                         />
                         {/* DELETING THE TASK - OWL */}
-                        <FlutterDashIcon
-                            className="icon"
+                        <CancelIcon
+                            className="delete-icon"
                             style={{ cursor: "pointer" }}
                             onClick={() => onDelete(task.id)}
                         />
@@ -217,6 +218,17 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     <></>
                 )}
                 <div className="subtasks">{displaySubtasks()}</div>
+
+                {task.tag ? 
+                    <div className="tags">
+                        <LocalOfferIcon style={{"width": "1em", "height": "0.8em", "color": "#808080"}}/> 
+                        <div className="tagname">
+                            {task.tag["tag"]}
+                        </div>
+                    </div>
+                    : <></>
+                }
+                    
             </>
         );
     };
@@ -244,7 +256,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                         </div>
                         <div className="icon-container">
                             {/* Showing subtasks - Running Man */}
-                            <DirectionsRunIcon
+                            <FormatListBulletedIcon
                                 className="icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => setAddingSubtask(!addingSubtask)}
@@ -256,9 +268,9 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                                     style={{ cursor: "pointer" }}
                                 />
                             </button>
-                            {/* DELETING THE TASK - OWL */}
-                            <FlutterDashIcon
-                                className="icon"
+                            {/* DELETING THE TASK*/}
+                            <CancelIcon
+                                className="delete-icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => onDelete(task.id)}
                             />

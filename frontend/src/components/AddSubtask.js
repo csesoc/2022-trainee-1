@@ -16,8 +16,6 @@ export const AddTaskContainer = styled.div`
     background-color: rgba(162, 210, 255, 0.1);
 `
 
-
-
 const AddSubtask = ({task, onAddSubtask, closeForm, calculateNewProgress }) => {
     const [subtaskText, setSubtaskText] = useState('')
 
@@ -62,6 +60,7 @@ const AddSubtask = ({task, onAddSubtask, closeForm, calculateNewProgress }) => {
                     type="submit"
                     disabled={!hasSubtaskText()}
                     startIcon={<ModeEditIcon />}
+                    color="inherit"
                 >
                     Add
                 </Button>

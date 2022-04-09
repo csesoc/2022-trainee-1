@@ -20,10 +20,12 @@ const AddTask = ({onAdd}) => {
     const [text, setText] = useState('')
     const [description, setDescription] = useState('')
     const [dueDate, setDueDate] = useState('')
-    const [tags, setTags] = useState([])
+    const [tag, setTag] = useState(null);
     const [priority, setPriority] = useState(false)
     const [subtasks, setSubtasks] = useState([])
-    
+
+    const [globalTags, setGlobalTags] = useState([])
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -38,13 +40,13 @@ const AddTask = ({onAdd}) => {
             return
         }
 
-        onAdd({text, description, dueDate, tags, priority, subtasks})
+        onAdd({text, description, dueDate, tag, priority, subtasks})
 
         // Clear form
         setText('')
         setDescription('')
         setDueDate('')
-        setTags([])
+        setTag(null)
         setPriority(false)
         setSubtasks([])
     }
@@ -91,9 +93,13 @@ const AddTask = ({onAdd}) => {
                 onChange={(e) => setDescription(e.target.value)} style={InputStyle}/>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicText">
+            <Form.Group className="mb-3" style={{"display": "flex", "flex-direction": "column", "align-items": "center", "gap": "10px"}} controlId="formBasicText">
                 <Form.Label><h5>Categories</h5></Form.Label>
-                <CategoryTags tags={tags} setTags={setTags}/>
+                {/* <select className="categories">
+                    <option value="select a tag">Select a tag</option>
+                </select>
+                <input type="submit" value="Submit" /> */}
+                <CategoryTags tag={tag} setTag={(tag) => setTag(tag)} globalTags={globalTags} setGlobalTags={(tag) => setGlobalTags([...globalTags, tag])}/>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasic">

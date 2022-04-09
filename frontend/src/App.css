@@ -5,7 +5,7 @@
 
 .navbar{
   display: flex;
-  background-color: #94acbc;
+  background-color: #909BAE;
   font-size: 30px;
   padding: 10px;
   width: 100%;
@@ -34,7 +34,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: 	#d7aca9;
+  background-color: #a7b0bf;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -60,7 +60,7 @@
 }
 
 .sidenav a:hover {
-  color: #d7aca9;
+  color: #909BAE;
 }
 
 .sidenav .closebtn {
