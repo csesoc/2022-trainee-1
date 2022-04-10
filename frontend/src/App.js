@@ -136,7 +136,7 @@ function App() {
   const editTask = (id, newTitle, newDesc, newDueDate) => {
     const editedTaskList = tasks.map(task => {
       // if this task has the same ID as the edited task
-        if (id === task.id) {
+        if (id === task._id) {
           if (task.addToCalendar) {
             //we edit in google calendar
             editEvent(task.text, task.dueDate, {
@@ -145,8 +145,14 @@ function App() {
               //newDueDate??
             })
           }
-
-          return {...task, text: newTitle, description: newDesc, dueDate: newDueDate}
+          const newTask = {...task, text: newTitle, description: newDesc, dueDate: newDueDate};
+          fetch("http://localhost:8000/editTask", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(task)
+          });
+          console.log('fetched to edit task');
+          return newTask;
         }
         return task;
     });
@@ -157,7 +163,7 @@ function App() {
   const addSubtask = (id, newSubtaskArray) => {
     const editedTaskList = tasks.map(task => {
       // if this task has the same ID as the edited task
-        if (id === task.id) {
+        if (id === task._id) {
           return {...task, subtasks: newSubtaskArray}
         }
         return task;

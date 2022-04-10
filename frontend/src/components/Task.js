@@ -163,14 +163,15 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
     };
 
     const showDate = () => {
-        return task.dueDate.toLocaleString("en-us", {
+        const dateObj = new Date(task.dueDate);
+        return dateObj.toLocaleString("en-us", {
             weekday: "long",
             year: "numeric",
             month: "short",
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
-        })
+        });
     }
     const renderViewTask = () => {
         return (

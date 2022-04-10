@@ -1,9 +1,11 @@
 import Task from './Task'
 
 const TodaysTasks = ({tasks, onDelete}) => {
-    const today = new Date();
-    const todaysDate = `${today.getFullYear()} ${today.getMonth() + 1} ${today.getDate()}`
-    const todaysTasks = tasks.filter((task) => task.dueDate && `${task.dueDate.getFullYear()} ${task.dueDate.getMonth() + 1} ${task.dueDate.getDate()}` === todaysDate)
+    const today = new Date();    
+    const todaysTasks = tasks.filter((task) => {
+        var taskDate = task.dueDate.toString("r");
+        return task.dueDate && taskDate.slice(0,10) == `${today.getFullYear(0)}-${String(today.getMonth(0) + 1).padStart(2,'0')}-${String(today.getDate(0), 2).padStart(2,'0')}`;
+    });
 
     return (
         <>

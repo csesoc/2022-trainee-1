@@ -40,6 +40,15 @@ async function run() {
         res.status(200).send({newId: newTask._id});
     })
 
+    app.post('/editTask', async (req, res) => {
+        const taskToEdit = req.body;
+        await tasksCollection.updateOne(
+            { _id : taskToEdit._id }, 
+            taskToEdit
+        );
+        res.status(200).send();
+    })
+
     app.delete('/tasks', async (req, res) => {
         const idToDelete = req.body.idToDelete;
         await tasksCollection.deleteOne({"_id" : ObjectId(idToDelete)});
