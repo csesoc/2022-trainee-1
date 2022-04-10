@@ -1,61 +1,55 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Trebuchet MS", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
 }
 
 .task {
-  background: #f4f4f4;
-  margin: 5px auto;
-  padding: 10px 20px;
-  cursor: pointer;
-  width: 50%;
+    background: #f4f4f4;
+    margin: 5px auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 50%;
 }
 
 .right {
-  margin-left: 90%;
-  margin-bottom: 8%;
+    margin-left: 90%;
+    margin-bottom: 8%;
 }
 
 .icon {
-  margin-left: auto;
-  margin-bottom: 8%;
+    margin-left: auto;
+    margin-bottom: 8%;
 }
 
 .form {
-  display: flex;
-  flex-wrap: wrap;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-
 .container h2 {
-  margin-left: auto;
-  color: red;
+    margin-left: auto;
+    color: red;
 }
 
 .Item {
-  display: flex;
-  margin: auto auto;
-  text-align: center;
+    display: flex;
+    margin: auto auto;
+    text-align: center;
 }
 
 .container .break {
-  flex-basis: 100%;
-  height: 0;
+    flex-basis: 100%;
+    height: 0;
 }
 
 .subtasks {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
-
-
-

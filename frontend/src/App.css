@@ -1,27 +1,25 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
-
-.navbar{
-  display: flex;
-  background-color: #94acbc;
-  z-index: 2;
-  font-size: 30px;
-  padding: 10px;
-  width: 100%;
-  position: -webkit-sticky; /* Safari */
-  position: sticky;
-  top: 0;
-  text-align: center;
+.navbar {
+    display: flex;
+    background-color: #909bae;
+    font-size: 30px;
+    padding: 10px;
+    width: 100%;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+    text-align: center;
 }
 
-.navTitle{
-  width: -moz-fit-content;
-  width: fit-content;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,0);
+.navTitle {
+    width: -moz-fit-content;
+    width: fit-content;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 
 /* .openbtn{
@@ -29,53 +27,54 @@
 } */
 
 .sidenav {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: 	#d7aca9;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #a7b0bf;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
 .sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: black;
-  display: block;
-  transition: 0.3s;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    color: black;
+    display: block;
+    transition: 0.3s;
 }
 
-
-
 #hidden {
-  width: 0px;
+    width: 0px;
 }
 
 #open {
-  width: 200px;
+    width: 200px;
 }
 
 .sidenav a:hover {
-  color: #d7aca9;
+    color: #909bae;
 }
 
 .sidenav .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
 }
 
-
-
-
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
 }
