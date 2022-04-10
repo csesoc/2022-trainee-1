@@ -84,9 +84,9 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
         setTitle(editTitle);
         setDescription(editDescription);
         setDueDate(editDueDate);
-        onEdit(task.id, editTitle, editDescription, editDueDate);
+        onEdit(task._id, editTitle, editDescription, editDueDate);
         setEditing(false);
-}
+    }
 
     // submits using enter key
     function handleEnter(e) {

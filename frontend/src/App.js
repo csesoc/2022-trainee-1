@@ -40,6 +40,14 @@ function App() {
     }).then(response => {
       return response.json();
     }).then(jsonData => {
+      jsonData.forEach((currTask) => {
+        var subTasksArr = new Array();
+        currTask.subtasks.forEach((mapRepr) => {
+          const currSubTaskMap = new Map(JSON.parse(mapRepr));
+          subTasksArr.push(currSubTaskMap);
+        });
+        currTask.subtasks = subTasksArr;
+      })
       setTasks(jsonData);
       console.log(jsonData);
       console.log("fetched from backend");
@@ -149,7 +157,7 @@ function App() {
           fetch("http://localhost:8000/editTask", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(task)
+            body: JSON.stringify(newTask)
           });
           console.log('fetched to edit task');
           return newTask;
@@ -163,8 +171,21 @@ function App() {
   const addSubtask = (id, newSubtaskArray) => {
     const editedTaskList = tasks.map(task => {
       // if this task has the same ID as the edited task
-        if (id === task._id) {
-          return {...task, subtasks: newSubtaskArray}
+        if (id === task.id) {
+          let subTaskRepr = new Array();
+          newSubtaskArray.forEach((subTaskMap) => {
+            subTaskRepr.push(JSON.stringify(Array.from(subTaskMap.entries())));
+          });
+          console.log("subtaskrepr is");
+          console.log(subTaskRepr);
+
+          fetch("http://localhost:8000/editTask", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({...task, subtasks: subTaskRepr})
+          });
+
+          return {...task, subtasks: newSubtaskArray};
         }
         return task;
     });

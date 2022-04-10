@@ -42,15 +42,18 @@ async function run() {
 
     app.post('/editTask', async (req, res) => {
         const taskToEdit = req.body;
-        await tasksCollection.updateOne(
-            { _id : taskToEdit._id }, 
-            taskToEdit
-        );
+        console.log(taskToEdit);
+        await tasksCollection.deleteOne({"_id" : taskToEdit._id});
+        await tasksCollection.deleteOne({"_id" : ObjectId(taskToEdit._id)});
+        await tasksCollection.insertOne(taskToEdit, (e) => {
+            if (e) return;
+        });
         res.status(200).send();
     })
 
     app.delete('/tasks', async (req, res) => {
         const idToDelete = req.body.idToDelete;
+        await tasksCollection.deleteOne({"_id" : idToDelete});
         await tasksCollection.deleteOne({"_id" : ObjectId(idToDelete)});
         res.sendStatus(200);
     })
