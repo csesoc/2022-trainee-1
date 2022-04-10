@@ -1,3 +1,5 @@
+import { startOfToday } from "date-fns";
+
 const gapi = window.gapi
 const CLIENT_ID = "716910601283-b3lhnv6lj93f01c4hmagk7ibo84064u9.apps.googleusercontent.com"
 const DISCOVERY_DOCS = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
@@ -59,14 +61,17 @@ async function getToken(err) {
 
 // gets eventID with same matching name
 // can be updated for more correctness later
-async function getEventID(name) {
+async function getEventID(name, dueDate) {
 
   let res = await authRequest(gapi.client.calendar.events.list, {
     "calendarId": "primary"
   })
 
   for (const item of res.result.items) {
-    if (item.summary === name) {
+
+    if (item.summary === name &&
+      compareDate(Date.parse(item.start.dateTime), dueDate.getTime())
+      ) {
       return item.id
     }
   }
@@ -74,6 +79,11 @@ async function getEventID(name) {
   return "failed to get Event ID"
 }
 
+
+// 2.5 minute
+function compareDate(date1, date2) {
+  return Math.abs(date1 - date2) < 150000
+}
 
 // attempts to make input request and reauthenticates if 
 // previous token has expired
@@ -91,16 +101,15 @@ async function authRequest(requestFunction, requestBody) {
 }
 
 // ======= Functions which do stuff ====================
-// NOTE: events are currently ID-ed by their name which is obviously bad
-// but I cbf changing this rn
-// might change later to id based on name + description + dueDate
+// NOTE: events are Id-ed by name and dueDate
+// still not ideal but I cbf using actual id
 
 
 // req start datetime
 // take in summary, description
 
-export async function addEvent(title, description="", startTime, priority) {
-
+export async function addEvent(title, description="", startTime) {
+  startTime = startTime.toISOString()
   console.log(title, description)
   await initClients()
   
@@ -108,11 +117,11 @@ export async function addEvent(title, description="", startTime, priority) {
     'summary': title,
     'description': description,
     'start': {
-      'dateTime': '2022-04-10T09:00:00-07:00',
+      'dateTime': startTime,
       'timeZone': 'Australia/Sydney'
     },
     "end": {
-      'dateTime': '2022-04-10T09:00:00-07:00',
+      'dateTime': startTime,
       'timeZone': 'Australia/Sydney'
     },
     'reminders': {
@@ -146,10 +155,10 @@ export async function addEvent(title, description="", startTime, priority) {
 
 // edits events based on input
 // pass in changes as an object with new params to be changed
-export async function editEvent(name, changes) {
+export async function editEvent(name, dueDate, changes) {
   await initClients()
 
-  let eventID = await getEventID(name)
+  let eventID = await getEventID(name, dueDate)
 
   try{
     await authRequest(gapi.client.calendar.events.patch,{
@@ -170,9 +179,9 @@ export async function editEvent(name, changes) {
 
 
 // event removes based on task name
-export async function removeEvent(name) {
+export async function removeEvent(name, dueDate) {
   await initClients()
-  let eventID = await getEventID(name)
+  let eventID = await getEventID(name, dueDate)
 
   try {
     await authRequest(gapi.client.calendar.events.delete,{

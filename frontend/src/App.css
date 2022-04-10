@@ -4,22 +4,29 @@
 
 
 .navbar{
-  overflow: hidden;
-  background-color: #0d6ffc;
-  height: 70px;
+  display: flex;
+  background-color: #94acbc;
+  z-index: 2;
   font-size: 30px;
   padding: 10px;
   width: 100%;
   position: -webkit-sticky; /* Safari */
+  position: sticky;
   top: 0;
-  display: block;
   text-align: center;
 }
 
-.openbtn{
-  position: fixed;
-  left: 20px;
+.navTitle{
+  width: -moz-fit-content;
+  width: fit-content;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,0);
 }
+
+/* .openbtn{
+  
+} */
 
 .sidenav {
   height: 100%;
@@ -28,7 +35,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: 	#D3D3D3;
+  background-color: 	#d7aca9;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
@@ -54,7 +61,7 @@
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: #d7aca9;
 }
 
 .sidenav .closebtn {

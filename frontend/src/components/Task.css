@@ -1,0 +1,79 @@
+.title-container {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.icon-container {
+    display: flex;
+    flex: 0 1 auto;
+    margin-left: auto;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    display: flex;
+    flex: 0 1 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.subtask-title {
+    padding-top: 10px;
+    font-size: 14px;
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.override-button {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.edit-input {
+    text-align: center;
+    border: none;
+}
+
+.edit-input:hover {
+    outline: 2px solid gray;
+}
+
+.edit-input:focus {
+    outline: 2px solid black;
+}
+
+.subtasks {
+    padding-top: 10px;
+}
+
+.subtask {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 15px;
+}
+
+.subtask-name {
+    position: relative;
+    bottom: 2px;
+}

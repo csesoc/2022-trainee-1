@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types'
-import Button from './Button'
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddTaskIcon from '@mui/icons-material/AddTask';
 
 const Header = ({title, onAdd, showAdd}) => { 
-  
+
     return (
       <header className='header'>
           <div>
-            <h1>{title}</h1>
-            <AddCircleIcon onClick={onAdd}/>
-            {/* <Button color={showAdd ? 'red' : 'green'} text={showAdd ? 'Close' : 'Add'} onClick={onAdd} /> */}
+            <AddTaskIcon onClick={onAdd}/>
           </div>
       </header>
     )

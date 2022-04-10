@@ -1,22 +1,17 @@
 import Task from './Task'
 
-const Tasks = ({tasks, onDelete}) => {
-    /*
-    tasks = name of the state
-    setTasks = function to update the state
-    the array = default used for this state
-    tasks is immutable --> to change it, you would have setTasks(new array, including the old one)
-    */
-    const highPriorityTasks = tasks.slice().filter(a => a.priority === 1)
-    const lowPriorityTasks = tasks.slice().filter(a => a.priority !== 1)
+const Tasks = ({tasks, onDelete, onEdit, onAddSubtask}) => {
+    //console.log("Tasks", tasks)
+    const highPriorityTasks = tasks.slice().filter(a => a.priority === true)
+    const lowPriorityTasks = tasks.slice().filter(a => a.priority === false)
     const sortedTasks = highPriorityTasks.sort((a, b) => a.dueDate && b.dueDate ? (a.dueDate - b.dueDate) : (b.dueDate ? -1 : (a.dueDate ? 1 : 0))).concat(lowPriorityTasks.sort((a, b) => a.dueDate && b.dueDate ? (a.dueDate - b.dueDate) : (b.dueDate ? -1 : (a.dueDate ? 1 : 0))))
-    console.log(sortedTasks)
+    //console.log(sortedTasks)
     
     return (
         <>
             {sortedTasks.map((task) => (
                 <>
-                <Task task={task} onDelete={onDelete}/>
+                <Task task={task} onDelete={onDelete} onEdit={onEdit} onAddSubtask={onAddSubtask}/>
                 </>
             ))}
         </>
@@ -24,3 +19,4 @@ const Tasks = ({tasks, onDelete}) => {
 }
 
 export default Tasks
+
