@@ -101,7 +101,7 @@ function App() {
         removedTask = task
         if (task.addToCalendar) {
           // removed from calendar if applicable
-          removeEvent(task.text)
+          removeEvent(task.text, task.dueDate)
         }
       }
       return task._id !== id
@@ -139,7 +139,7 @@ function App() {
         if (id === task.id) {
           if (task.addToCalendar) {
             //we edit in google calendar
-            editEvent(task.text, {
+            editEvent(task.text, task.dueDate, {
               summary: newTitle,
               description: newDesc,
               //newDueDate??

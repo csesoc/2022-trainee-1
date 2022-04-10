@@ -77,21 +77,21 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
 
     function handleEditSubmit(e) {
         e.preventDefault();
+        submit()
+    }
+
+    function submit() {
         setTitle(editTitle);
         setDescription(editDescription);
         setDueDate(editDueDate);
         onEdit(task.id, editTitle, editDescription, editDueDate);
         setEditing(false);
-    }
+}
 
     // submits using enter key
     function handleEnter(e) {
         if (e.key === "Enter") {
-            setTitle(editTitle);
-            setDescription(editDescription);
-            setDueDate(editDueDate);
-            onEdit(task.id, editTitle, editDescription, editDueDate);
-            setEditing(false);
+            submit()
         }
     }
 
