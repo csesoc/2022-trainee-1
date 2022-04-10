@@ -154,10 +154,15 @@ function App() {
             })
           }
           const newTask = {...task, text: newTitle, description: newDesc, dueDate: newDueDate};
+          let subTaskRepr = new Array();
+          newTask.subtasks.forEach((subTaskMap) => {
+            subTaskRepr.push(JSON.stringify(Array.from(subTaskMap.entries())));
+          });
+
           fetch("http://localhost:8000/editTask", {
             method: "POST",
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(newTask)
+            body: JSON.stringify({...newTask, subtasks: subTaskRepr})
           });
           console.log('fetched to edit task');
           return newTask;
@@ -230,7 +235,7 @@ function App() {
           }
         </div>
 
-        { // we only show Today's Tasks on the Home Page
+        {/* { // we only show Today's Tasks on the Home Page
           currentPage === "Home" ?
           <>
             <h1>Today's Tasks</h1>
@@ -241,7 +246,7 @@ function App() {
             </div>
             </>
           : ""
-        }
+        } */}
 
         {
           currentPage === "Home" ?
