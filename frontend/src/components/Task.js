@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaCalendarAlt } from "react-icons/fa";
 import styled from "styled-components";
-import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import FlutterDashIcon from "@mui/icons-material/FlutterDash";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import CancelIcon from "@mui/icons-material/Cancel";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import DateTimePicker from "@mui/lab/DateTimePicker";
 import TextField from "@mui/material/TextField";
@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import "./Task.css";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
+import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 export const TaskContainer = styled.div`
     display: flex;
@@ -32,7 +33,6 @@ export const PriorityTaskContainer = styled(TaskContainer)`
 
 function LinearProgressWithLabel(props) {
     return (
-
         <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box sx={{ width: "100%", mr: 1 }}>
                 <LinearProgress variant="determinate" {...props} />
@@ -45,7 +45,6 @@ function LinearProgressWithLabel(props) {
             </Box>
         </Box>
     );
-
 }
 
 const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
@@ -77,7 +76,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
 
     function handleEditSubmit(e) {
         e.preventDefault();
-        submit()
+        submit();
     }
 
     function submit() {
@@ -86,12 +85,12 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
         setDueDate(editDueDate);
         onEdit(task.id, editTitle, editDescription, editDueDate);
         setEditing(false);
-}
+    }
 
     // submits using enter key
     function handleEnter(e) {
         if (e.key === "Enter") {
-            submit()
+            submit();
         }
     }
 
@@ -170,8 +169,8 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
             day: "numeric",
             hour: "numeric",
             minute: "numeric",
-        })
-    }
+        });
+    };
     const renderViewTask = () => {
         return (
             <>
@@ -179,8 +178,8 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     {/* TODO: TEMP FIX FOR CENTERING THE TITLE */}
                     <div className="title">{task.text}</div>
                     <div className="icon-container">
-                        {/* Showing subtasks - Running Man */}
-                        <DirectionsRunIcon
+                        {/* Showing subtasks*/}
+                        <FormatListBulletedIcon
                             className="icon"
                             style={{ cursor: "pointer" }}
                             onClick={() => setAddingSubtask(!addingSubtask)}
@@ -192,8 +191,8 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                             onClick={() => setEditing(!isEditing)}
                         />
                         {/* DELETING THE TASK - OWL */}
-                        <FlutterDashIcon
-                            className="icon"
+                        <CancelIcon
+                            className="delete-icon"
                             style={{ cursor: "pointer" }}
                             onClick={() => onDelete(task._id)}
                         />
@@ -203,9 +202,13 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                 {/* <LinearProgress className="item" variant="determinate" value="10" /> */}
                 <p className="Item">{task.description}</p>
                 <div className="calendar-container">
-                    {showDate().length ? <FaCalendarAlt
-                        style={{ marginBottom: "5px", marginRight: "5px" }}
-                    /> : <></>}
+                    {showDate().length ? (
+                        <FaCalendarAlt
+                            style={{ marginBottom: "5px", marginRight: "5px" }}
+                        />
+                    ) : (
+                        <></>
+                    )}
                     {showDate()}
                 </div>
 
@@ -230,6 +233,20 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     <></>
                 )}
                 <div className="subtasks">{displaySubtasks()}</div>
+                <div className="task-tags">
+                    {task.tags.map((t) => (
+                        <div className="tags">
+                            <LocalOfferIcon
+                                style={{
+                                    width: "1em",
+                                    height: "0.8em",
+                                    color: "#808080",
+                                }}
+                            />
+                            <div className="tagname">{t}</div>
+                        </div>
+                    ))}
+                </div>
             </>
         );
     };
@@ -258,7 +275,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                         </div>
                         <div className="icon-container">
                             {/* Showing subtasks - Running Man */}
-                            <DirectionsRunIcon
+                            <FormatListBulletedIcon
                                 className="icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => setAddingSubtask(!addingSubtask)}
@@ -270,9 +287,9 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                                     style={{ cursor: "pointer" }}
                                 />
                             </button>
-                            {/* DELETING THE TASK - OWL */}
-                            <FlutterDashIcon
-                                className="icon"
+                            {/* DELETING THE TASK*/}
+                            <CancelIcon
+                                className="delete-icon"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => onDelete(task._id)}
                             />
@@ -289,9 +306,16 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     </div>
 
                     <div className="calendar-container">
-                        {showDate().length ? <FaCalendarAlt
-                            style={{ marginBottom: "5px", marginRight: "5px" }}
-                        /> : <></>}
+                        {showDate().length ? (
+                            <FaCalendarAlt
+                                style={{
+                                    marginBottom: "5px",
+                                    marginRight: "5px",
+                                }}
+                            />
+                        ) : (
+                            <></>
+                        )}
                         {showDate()}
                     </div>
 
@@ -318,6 +342,20 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                     )}
 
                     <div className="subtasks">{displaySubtasks()}</div>
+                    <div className="task-tags">
+                        {task.tags.map((t) => (
+                            <div className="tags">
+                                <LocalOfferIcon
+                                    style={{
+                                        width: "1em",
+                                        height: "0.8em",
+                                        color: "#808080",
+                                    }}
+                                />
+                                <div className="tagname">{t}</div>
+                            </div>
+                        ))}
+                    </div>
                 </form>
             </>
         );
