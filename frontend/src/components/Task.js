@@ -32,6 +32,7 @@ export const PriorityTaskContainer = styled(TaskContainer)`
 
 function LinearProgressWithLabel(props) {
     return (
+
         <Box sx={{ display: "flex", alignItems: "center" }}>
             <Box sx={{ width: "100%", mr: 1 }}>
                 <LinearProgress variant="determinate" {...props} />
@@ -44,6 +45,7 @@ function LinearProgressWithLabel(props) {
             </Box>
         </Box>
     );
+
 }
 
 const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
@@ -75,11 +77,22 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
 
     function handleEditSubmit(e) {
         e.preventDefault();
+        submit()
+    }
+
+    function submit() {
         setTitle(editTitle);
         setDescription(editDescription);
         setDueDate(editDueDate);
         onEdit(task.id, editTitle, editDescription, editDueDate);
         setEditing(false);
+}
+
+    // submits using enter key
+    function handleEnter(e) {
+        if (e.key === "Enter") {
+            submit()
+        }
     }
 
     const customDatePicker = React.forwardRef((props, ref) => {
@@ -240,6 +253,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                                 value={editTitle}
                                 type="text"
                                 onChange={handleTitleChange}
+                                onKeyDown={handleEnter}
                             />
                         </div>
                         <div className="icon-container">
@@ -270,6 +284,7 @@ const Task = ({ task, onDelete, onEdit, onAddSubtask }) => {
                             value={editDescription}
                             type="text"
                             onChange={handleDescChange}
+                            onKeyDown={handleEnter}
                         />
                     </div>
 
