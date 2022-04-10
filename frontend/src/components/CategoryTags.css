@@ -1,37 +1,40 @@
 /*this css is for the buttons and stuff*/
 
 .flex-container {
-  margin: 10px; /* set this to equal other form stuff*/
-  padding: 5px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: flex-start;
-  background-color: #f4f4f4;
-  gap: 5px 10px;
+    margin: auto; /* set this to equal other form stuff*/
+    margin-top: 10px;
+    padding: 5px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    /* background-color: #f4f4f4; */
+    gap: 5px 10px;
+    width: 75%;
+    align-self: center;
 }
 
-
 .tag {
-  display: flex;
-  justify-content: space-between;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: black solid;
-  background-color: lightblue;
-  border-width: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-style: solid;
+    border-radius: 5px;
+    border-color: black solid;
+    background-color: lightblue;
+    border-width: 1px;
 
-  min-width: 50px;
+    min-width: 50px;
 
-  padding: 0px 3px;
-
+    padding: 0px 3px;
 }
 
 .x {
-  margin-left: 5px;
-  color: grey;
-  cursor: pointer;
+    display: flex;
+    margin-left: 5px;
+    color: grey;
+    cursor: pointer;
 }
 
 .x:hover {
-  color: red;
+    color: red;
 }

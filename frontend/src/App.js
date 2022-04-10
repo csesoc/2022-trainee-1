@@ -192,10 +192,6 @@ function App() {
 
     setTasks(editedTaskList)
   }
-
-
-
-
   return (
 
 
