@@ -7,9 +7,8 @@ import TodaysTasks from './components/TodaysTasks';
 import {removeEvent, editEvent} from "./components/GoogleCalendar"
 import './App.css';
 //import Button from 'react-bootstrap/Button';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import frLocale from 'date-fns/locale/fr';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 
 const default_color = "#00000"
@@ -171,7 +170,11 @@ function App() {
 
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale={frLocale}>
+
+
+
+
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <div className="navbar">
         <span className="openbtn" style={{"font-size": "30px", "cursor": "pointer"}} 
         onClick={handleNavClick}>&#9776;</span>
@@ -217,7 +220,12 @@ function App() {
           : ""
         }
 
-        <h1>Tasks</h1>
+        {
+          currentPage === "Home" ?
+          <h1>All Tasks</h1> :
+          <h1>Tasks</h1>
+        }
+        
         
         <div>
           <>
@@ -225,7 +233,7 @@ function App() {
           </>
         </div>
       </div>
-    </LocalizationProvider>
+      </MuiPickersUtilsProvider>
   );
 }
 

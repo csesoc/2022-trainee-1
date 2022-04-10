@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import Button from "@mui/material/Button";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import Form from 'react-bootstrap/Form';
-import DateTimePicker from '@mui/lab/DateTimePicker'; 
-import TextField from '@mui/material/TextField';
+import { DateTimePicker } from "@material-ui/pickers";
 import styled from 'styled-components';
 import CategoryTags from './CategoryTags';
 import { addEvent } from './GoogleCalendar';
-import { setDate } from 'date-fns';
+
 
 export const AddTaskContainer = styled.div`
     margin: 30px auto;
@@ -21,7 +20,7 @@ export const AddTaskContainer = styled.div`
 const AddTask = ({onAdd}) => {
     const [text, setText] = useState('')
     const [description, setDescription] = useState('')
-    const [dueDate, setDueDate] = useState('')
+    const [dueDate, setDueDate] = useState(getDefaultDate())
     const [tags, setTags] = useState([])
     const [priority, setPriority] = useState(false)
     const [subtasks, setSubtasks] = useState([])
@@ -45,7 +44,7 @@ const AddTask = ({onAdd}) => {
         // Google calendar integration
         // figure out how startTime stuff works
         if (addToCalendar) {
-            addEvent(text, description, "temp", priority)
+            addEvent(text, description, dueDate)
         }
 
         onAdd({text, description, dueDate, tags, priority, subtasks, addToCalendar})
@@ -53,7 +52,7 @@ const AddTask = ({onAdd}) => {
         // Clear form
         setText('')
         setDescription('')
-        setDueDate('')
+        setDueDate(getDefaultDate())
         setTags([])
 
         setPriority(false)
@@ -61,22 +60,6 @@ const AddTask = ({onAdd}) => {
         setCalendar(false)
 
     }
-
-    const customDatePicker = React.forwardRef((props, ref) => {
-        // keep as date format
-
-        return (
-            <DateTimePicker
-            label="Task Date"
-            // inputFormat="DD-MM-YYYY"
-            value={dueDate}
-            onChange={(newDate) => {
-                setDueDate(newDate);
-            }}
-            renderInput={(params) => <TextField {...params} 
-            />}
-            /> 
-    )});
 
     const InputStyle = {
         width: "75%", 
@@ -122,7 +105,16 @@ const AddTask = ({onAdd}) => {
             <Form.Group className="mb-3" controlId="formBasic">
                 <Form.Label><h5>Due Date</h5></Form.Label>
                 <br />
-                <Form.Control as={customDatePicker} value={dueDate} onChange={(e) => setDueDate(e.target.value)} style={{width: "75%", maxWidth: "1000px", margin: "auto"}}/>
+                <DateTimePicker
+                disablePast
+                inputVariant="outlined"
+                value={dueDate}
+                onChange={(newDate) => {
+                    setDueDate(newDate)
+                }}
+                />
+                
+
             </Form.Group>
 
             <Form.Group className="mb-3" style={{"display": "flex", "justifyContent": "center"}} controlId="formBasicCheckbox">
@@ -150,5 +142,14 @@ const AddTask = ({onAdd}) => {
         </AddTaskContainer>
     )
 }
+
+
+function getDefaultDate(){
+    var date = new Date()
+    date.setHours(18)
+    date.setMinutes(0)
+    return date
+}
+
 
 export default AddTask

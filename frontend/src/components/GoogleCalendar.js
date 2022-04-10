@@ -1,3 +1,5 @@
+import { startOfToday } from "date-fns";
+
 const gapi = window.gapi
 const CLIENT_ID = "716910601283-b3lhnv6lj93f01c4hmagk7ibo84064u9.apps.googleusercontent.com"
 const DISCOVERY_DOCS = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"
@@ -99,8 +101,8 @@ async function authRequest(requestFunction, requestBody) {
 // req start datetime
 // take in summary, description
 
-export async function addEvent(title, description="", startTime, priority) {
-
+export async function addEvent(title, description="", startTime) {
+  startTime = startTime.toISOString()
   console.log(title, description)
   await initClients()
   
@@ -108,11 +110,11 @@ export async function addEvent(title, description="", startTime, priority) {
     'summary': title,
     'description': description,
     'start': {
-      'dateTime': '2022-04-10T09:00:00-07:00',
+      'dateTime': startTime,
       'timeZone': 'Australia/Sydney'
     },
     "end": {
-      'dateTime': '2022-04-10T09:00:00-07:00',
+      'dateTime': startTime,
       'timeZone': 'Australia/Sydney'
     },
     'reminders': {
